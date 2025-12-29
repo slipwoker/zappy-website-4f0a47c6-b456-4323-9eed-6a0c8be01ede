@@ -1,50 +1,62 @@
-# Business — Generative Engine Optimization Map
+# Urban Balcony — Generative Engine Optimization Map
+
+> A גינון עירוני ועיצוב נוף business.
 
 ---
 
 ## Pages
 
 ### בית
-https://example.com
+https://urban-balcony.zappy5.app
 גלו את השירות המקצועי של Urban Balcony לעיצוב מרפסות עירוניות. התייעצות חינם עכשיו!
 
 ### שירותים
-https://example.com/services
+https://urban-balcony.zappy5.app/services
 שירותי urban jungle balcony מקצועיים המותאמים לצרכים שלכם. תכנון, עיצוב, ותחזוקה של מרפסות עירוניות.
 
 ### אודות
-https://example.com/about
+https://urban-balcony.zappy5.app/about
 הכירו את הצוות המקצועי של Urban Balcony - מומחים בגינון עירוני ועיצוב נוף למרפסות וגגות.
 
 ### צור קשר
-https://example.com/contact
+https://urban-balcony.zappy5.app/contact
 צרו קשר עם Urban Balcony לקבלת ייעוץ חינם והצעת מחיר. נשמח לעזור לכם ליצור את המרפסת הירוקה שלכם!
 
 ### גלריית פרויקטים - Urban Balcony
-https://example.com/gallery
+https://urban-balcony.zappy5.app/gallery
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://example.com/privacy
+https://urban-balcony.zappy5.app/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://example.com/terms
+https://urban-balcony.zappy5.app/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://example.com/accessibility
+https://urban-balcony.zappy5.app/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
 
 # Business Context (for LLM understanding)
 
-## About Business
+## About Urban Balcony
+Urban Balcony is a business in the גינון עירוני ועיצוב נוף industry.
+
+## Target Audience
+- בעלי דירות עירוניות
+- משפחות צעירות אקולוגיות
+- תושבי דירות יוקרה
+
+## Industry
+גינון עירוני ועיצוב נוף
+
 ---
 
 # Additional Resources
 
-- **Sitemap**: https://example.com/sitemap.xml
-- **Robots.txt**: https://example.com/robots.txt
+- **Sitemap**: https://urban-balcony.zappy5.app/sitemap.xml
+- **Robots.txt**: https://urban-balcony.zappy5.app/robots.txt
