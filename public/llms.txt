@@ -1,6 +1,4 @@
-# Urban Balcony — Generative Engine Optimization Map
-
-> A גינון עירוני ועיצוב נוף business.
+# Business — Generative Engine Optimization Map
 
 ---
 
@@ -43,17 +41,7 @@ Information about WCAG compliance and accessibility features.
 
 # Business Context (for LLM understanding)
 
-## About Urban Balcony
-Urban Balcony is a business in the גינון עירוני ועיצוב נוף industry.
-
-## Target Audience
-- בעלי דירות עירוניות
-- משפחות צעירות אקולוגיות
-- תושבי דירות יוקרה
-
-## Industry
-גינון עירוני ועיצוב נוף
-
+## About Business
 ---
 
 # Additional Resources
