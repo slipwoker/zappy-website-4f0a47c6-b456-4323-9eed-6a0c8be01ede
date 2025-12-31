@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/sitemap.xml
+Sitemap: https://urban-balcony.zappy5.app/sitemap.xml
