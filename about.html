@@ -76,7 +76,7 @@
   // Configuration
   var config = {
     websiteId: '4f0a47c6-b456-4323-9eed-6a0c8be01ede',
-    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    apiUrl: 'http://localhost:5001/api/analytics/track',
     sessionDuration: 30 * 60 * 1000, // 30 minutes
     visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
     trackPageViews: true,
@@ -271,61 +271,43 @@
 </script>
 <!-- End Zappy Analytics -->
 
-    <style id="zappy-mobile-submenu-styles">
-      /* Mobile submenu accordion styles */
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
       @media (max-width: 768px) {
-        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu {
-          position: static !important;
-          transform: none !important;
-          box-shadow: none !important;
-          background: transparent !important;
-          margin-top: 0 !important;
-          max-height: 0;
-          overflow: hidden;
-          opacity: 0;
-          visibility: hidden;
-          transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, padding 0.3s ease;
-          padding: 0 !important;
-          border-radius: 0 !important;
-        }
-        .sub-menu.mobile-expanded {
-          max-height: 500px !important;
-          opacity: 1 !important;
-          visibility: visible !important;
-          padding: 8px 0 8px 16px !important;
-        }
-        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded, html[lang="ar"] .sub-menu.mobile-expanded {
-          padding: 8px 16px 8px 0 !important;
-        }
-        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu {
-          opacity: 0; visibility: hidden; pointer-events: none;
-        }
-        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded {
-          opacity: 1 !important; visibility: visible !important; pointer-events: auto !important;
-        }
-        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) {
-          display: flex !important; flex-wrap: wrap !important; align-items: center !important;
-        }
-        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a {
-          flex: 1 !important;
-        }
-        .mobile-submenu-toggle {
-          display: flex !important; align-items: center !important; justify-content: center !important;
-          width: 44px !important; height: 44px !important; background: transparent !important;
-          border: none !important; cursor: pointer !important; padding: 0 !important; margin: 0 !important;
-          flex-shrink: 0 !important; -webkit-tap-highlight-color: transparent;
-        }
-        .mobile-submenu-toggle::after {
-          content: '' !important; display: block !important; width: 0 !important; height: 0 !important;
-          border-left: 6px solid transparent !important; border-right: 6px solid transparent !important;
-          border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important;
-        }
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
         .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
-        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu {
-          flex-basis: 100% !important; width: 100% !important;
-        }
-        .sub-menu a { padding: 10px 0 !important; display: block !important; font-size: 14px !important; }
-        .sub-menu a:hover { background-color: transparent !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
       }
       @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
     </style>
@@ -367,9 +349,8 @@
   <button class="lang-switcher-current" aria-haspopup="true" aria-expanded="false" data-no-icon-edit="true" style="display:flex;align-items:center;padding:8px;background:transparent;border:none;border-radius:6px;cursor:pointer;color:inherit;">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="currentColor" style="flex-shrink:0;" data-no-icon-edit="true"><path d="M12.039,.002s0,0,0,0c-.013,0-.026-.002-.039-.002-.005,0-.009,0-.014,0-.002,0-.003,0-.005,0C5.373,.011,0,5.39,0,12s5.383,12,12,12,12-5.383,12-12S18.638,.023,12.039,.002Zm9.747,6.998h-4.814c-1.067-2.669-2.712-4.781-3.731-5.925,3.734,.421,6.901,2.719,8.546,5.925Zm-4.786,5c0,1.407-.292,2.753-.731,4H7.731c-.439-1.247-.731-2.593-.731-4s.292-2.754,.73-4h8.539c.439,1.247,.731,2.593,.731,4Zm-1.122,5c-1.229,2.838-3.116,4.99-3.878,5.788-.762-.798-2.649-2.95-3.878-5.788h7.755ZM8.121,7c1.229-2.841,3.117-4.992,3.879-5.789,.762,.798,2.649,2.95,3.878,5.789h-7.757ZM10.757,1.075c-1.025,1.15-2.668,3.264-3.73,5.925H2.214C3.859,3.795,7.024,1.498,10.757,1.075ZM1.764,8H6.668c-.403,1.247-.668,2.589-.668,4s.265,2.752,.669,4H1.764c-.487-1.242-.764-2.588-.764-4s.277-2.758,.764-4Zm.45,9H7.029c1.067,2.669,2.712,4.781,3.731,5.925-3.734-.421-6.901-2.719-8.546-5.925Zm11.026,5.925c1.019-1.144,2.664-3.257,3.731-5.925h4.814c-1.645,3.206-4.812,5.504-8.546,5.925Zm8.996-6.925h-4.905c.404-1.248,.669-2.589,.669-4s-.265-2.752-.669-4h4.905c.487,1.242,.764,2.588,.764,4s-.277,2.758-.764,4Z"></path></svg>
   </button>
-  <div class="lang-switcher-dropdown" role="menu" style="position:absolute;top:100%;right:0;margin-top:4px;min-width:140px;background:white;border:1px solid rgba(128,128,128,0.2);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.2s ease;z-index:1001;">
-    <button class="lang-option" data-lang="fr" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:none;border:none;text-align:left;cursor:pointer;font-size:14px;color:#333;"><img src="https://api.iconify.design/circle-flags/fr.svg" width="20" height="20" alt="" style="display:inline-block;vertical-align:middle;border-radius:50%;"> Français</button>
-  </div>
+  <div class="lang-switcher-dropdown" role="menu" style="position:absolute;top:100%;right:0;margin-top:4px;min-width:140px;background:white;border:1px solid rgba(128,128,128,0.2);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.2s ease;z-index:1001;"><button class="lang-option" data-lang="fr">🇫🇷 Français</button>
+        <button class="lang-option" data-lang="en">🇺🇸 English</button></div>
 </div><div class="nav-cta-container">
 <li class="nav-cta-item">
 <a href="/contact" class="nav-cta-btn" data-i18n="about_nav_38">צור קשר</a>
@@ -540,6 +521,8 @@
 </script>
     <div data-integration="accessibility:toolbar"></div>
 
+
+
 <!-- i18next Multi-Language Support -->
 <script>
 (function() {
@@ -556,11 +539,6 @@
       "home_h3_7": "מומחים בעיצוב נוף וגינון למרפסות וגגות עירוניים - יוצרים חוויית urban jungle balcony ייחודית",
       "home_h3_8": "תכנון ועיצוב מרפסות",
       "home_h3_9": "בחירת צמחים מותאמים",
-      "home_h3_10": "מערכות השקיה חכמות",
-      "home_h3_11": "מומחיות בגינון עירוני",
-      "home_h3_12": "פתרונות אקולוגיים",
-      "home_h3_13": "עיצוב מותאם אישית",
-      "home_h3_14": "תחזוקה מקצועית",
       "home_p_15": "Happily created by&nbsp;Zappy",
       "home_p_16": "אנחנו מתמחים בהפיכת מרפסות עירוניות קטנות וגגות למרחבים ירוקים ומרגיעים. עם ניסיון רב שנים בתחום הגינון העירוני ועיצוב הנוף, אנחנו יוצרים פתרונות מותאמים אישית שמביאים את הטבע אל תוך הבית העירוני שלכם. בין אם אתם בעלי דירה המחפשים לשדרג את חלל המגורים, משפחה צעירה המעוניינת ביצירת סביבה ירוקה וחינוכית לילדים, או דיירי דירות יוקרה המחפשים חוויית מגורים מושלמת - אנחנו כאן כדי להגשים את החזון שלכם.",
       "home_p_17": "השירותים שלנו כוללים תכנון מקיף, בחירת צמחים מותאמים לתנאי האקלים העירוני, מערכות השקיה חכמות, ותחזוקה שוטפת. אנחנו מאמינים שכל מרפסת, גם הקטנה ביותר, יכולה להפוך למקלט ירוק שמשפר את איכות החיים ומחבר אותנו לטבע.",
@@ -580,6 +558,153 @@
       "home_p_31": "צרו קשר עוד היום לקבלת ייעוץ חינם והצעת מחיר מותאמת אישית. בואו נהפוך את המרפסת שלכם למרחב ירוק ומרגיע!",
       "home_p_32": "© 2025 Urban Balcony. כל הזכויות שמורות.",
       "home_p_33": "נוצר באמצעות&nbsp;Zappy",
+      "about_h1_1": "הסיפור שלנו",
+      "about_h2_2": "איך הכל התחיל",
+      "about_h2_3": "הערכים שמנחים אותנו",
+      "about_h2_4": "המשימה שלנו",
+      "about_h2_5": "הצוות המקצועי שלנו",
+      "about_h2_6": "רוצים להצטרף למשפחת הלקוחות שלנו?",
+      "about_h3_7": "מומחים בהפיכת מרפסות עירוניות למרחבים ירוקים ומרגיעים",
+      "about_h3_8": "מחויבות ללקוח",
+      "about_h3_9": "אחריות סביבתית",
+      "about_p_12": "Happily created by&nbsp;Zappy",
+      "about_p_13": "Urban Balcony נולד מתוך אהבה עמוקה לטבע ותשוקה לעיצוב. הסיפור שלנו התחיל לפני מספר שנים, כאשר גילינו כמה קשה למצוא פתרונות איכוtiים וממוקדי לקוח לגינון מרפסות עירוניות. רבים מבעלי הדירות בעיר חלמו על מרחב ירוק פרטי, אבל לא ידעו כיצד להתחיל או איזה צמחים יתאימו לתנאים הייחודיים של הסביבה העירונית.",
+      "about_p_14": "החלטנו ליצור עסק שמתמחה בדיוק בזה - בהפיכת מרפסות וגגות עירוניים למרחבים ירוקים ומזמינים. התחלנו עם כמה פרויקטים קטנים, ובזכות המחויבות שלנו לאיכות, לשירות אישי ולתוצאות מרשימות, המוניטין שלנו גדל במהירות. היום, אנחנו גאים להיות אחד מהספקים המובילים של שירותי גינון עירוני ועיצוב נוף למרפסות באזור.",
+      "about_p_15": "הפילוסופיה שלנו פשוטה: כל מרפסת, גם הקטנה ביותר, יכולה להפוך למקלט ירוק שמשפר את איכות החיים, מחבר אותנו לטבע, ומספק מרחב מרגיע ומעורר השראה. אנחנו מאמינים שהגינון העירוני הוא לא רק על צמחים יפים, אלא גם על יצירת סביבה בריאה, קיימא, ומזמינה שמשקפת את האישיות והסגנון של כל לקוח.",
+      "about_p_16": "אנחנו מאמינים שכל לקוח ייחודי ומגיע לו שירות אישי ומותאם. אנחנו מקשיבים לצרכים, מבינים את החזון, ועובדים בשקיפות מלאה כדי להגשים את המרפסת המושלמת עבורכם.",
+      "about_p_17": "אנחנו דואגים לסביבה ומשתמשים בשיטות גינון אקולוגיות וקיימות. בחירת צמחים מקומיים, חיסכון במים, ושימוש בדשנים אורגניים הם חלק בלתי נפרד מהעבודה שלנו.",
+      "about_p_18": "הצוות שלנו מורכב ממומחים מנוסים בתחומי הגינון, עיצוב הנוף, והשקיה. אנחנו משתמשים בחומרי גלם איכותיים ביותר ומקפידים על ביצוע מושלם בכל פרויקט.",
+      "about_p_19": "אנחנו תמיד מחפשים פתרונות חדשניים ויצירתיים כדי למקסם את הפוטנציאל של כל מרפסת. מטכנולוגיות השקיה חכמות ועד עיצובים ייחודיים - אנחנו לא מפחדים לחשוב מחוץ לקופסה.",
+      "about_p_20": "המשימה של Urban Balcony היא להפוך את הסביבה העירונית לירוקה ובריאה יותר, מרפסת אחת בכל פעם. אנחנו מאמינים שגינון עירוני הוא לא רק טרנד, אלא צורך חיוני בעולם המודרני. המרפסות והגגות שלנו הם המקום המושלם להביא את הטבע חזרה אל תוך הבית העירוני, לשפר את איכות האוויר, ולספק מרחב מרגיע ומעורר השראה.",
+      "about_p_21": "אנחנו שואפים להיות המובילים בתחום הגינון העירוני בישראל, ולהמשיך לחדש ולשפר את השירותים שלנו כדי לענות על הצרכים המשתנים של הלקוחות שלנו. אנחנו רוצים שכל אדם שמתגורר בעיר יוכל ליהנות מחוויית the urban balcony - מרחב ירוק פרטי שמחבר אותנו לטבע ומשפר את איכות החיים.",
+      "about_p_22": "בנוסף, אנחנו מחויבים לחינוך ולהעלאת המודעות לגבי חשיבות הגינון העירוני והקיימות הסביבתית. אנחנו משתפים את הידע והניסיון שלנו עם הלקוחות, מארגנים סדנאות וימי עיון, ותומכים בפרויקטים קהילתיים שמקדמים את הירוק העירוני.",
+      "about_p_23": "הצוות של Urban Balcony מורכב ממומחים מנוסים בתחומי הגינון, עיצוב הנוף, ההשקיה, והתחזוקה. כל חבר צוות מביא איתו ידע עמוק, ניסיון רב שנים, ותשוקה אמיתית לעבודה. אנחנו עובדים כצוות מגובש ומחויב, ומקפידים על תקשורת פתוחה ושקופה עם הלקוחות שלנו.",
+      "about_p_24": "הצוות שלנו כולל מעצבי נוף בעלי תואר אקדמי, גננים מוסמכים, טכנאי השקיה מקצועיים, ואנשי שירות מסורים. כל אחד מאיתנו מביא את המומחיות הייחודית שלו, ויחד אנחנו יוצרים פתרונות מקיפים ואיכותיים שעומדים בסטנדרטים הגבוהים ביותר.",
+      "about_p_25": "אנחנו גאים בצוות שלנו ובמחויבות שלו למצוינות, לשירות אישי, ולשביעות רצון הלקוחות. כל פרויקט הוא הזדמנות עבורנו להוכיח את המקצועיות והמסירות שלנו, וליצור מרפסת שתעניק שנים של הנאה ושביעות רצון.",
+      "about_p_26": "נשמח לעזור לכם להגשים את חזון המרפסת הירוקה שלכם. צרו קשר עוד היום לקבלת ייעוץ חינם ולהתחיל את המסע המרגש של יצירת urban jungle balcony משלכם!",
+      "about_p_27": "© 2025 Urban Balcony. כל הזכויות שמורות.",
+      "about_p_28": "נוצר באמצעות&nbsp;Zappy",
+      "home_h3_10": "מערכות השקיה חכמות",
+      "home_h3_11": "מומחיות בגינון עירוני",
+      "home_h3_12": "פתרונות אקולוגיים",
+      "home_h3_13": "עיצוב מותאם אישית",
+      "home_h3_14": "תחזוקה מקצועית",
+      "terms_h1_1": "תנאי שימוש",
+      "terms_h2_2": "1. הגדרות",
+      "terms_h2_3": "2. תיאור השירותים",
+      "terms_h2_4": "3. תנאי השימוש",
+      "terms_h2_5": "4. חובות המשתמש",
+      "terms_h2_6": "5. מדיניות תשלומים והחזרים",
+      "terms_h2_7": "6. הגבלת אחריות",
+      "terms_h2_8": "7. זכויות יוצרים וקניין רוחני",
+      "terms_h2_9": "8. פרטיות",
+      "terms_p_15": "Urban Balcony מספקת גינון עירוני ועיצוב נוף דרך האתר. השירותים כפופים לתנאים המפורטים במסמך זה \n            ועשויים להשתנות מעת לעת.",
+      "terms_p_16": "השימוש באתר מותנה בעמידה בתנאים הבאים:",
+      "terms_p_17": "במידה והשירותים כוללים תשלום:",
+      "terms_p_18": "השירותים ניתנים \"כפי שהם\" ללא אחריות מכל סוג. החברה לא תהיה אחראית לנזקים עקיפים, \n            תוצאתיים או מיוחדים הנובעים משימוש באתר, למעט במקרים בהם החוק קובע אחרת.",
+      "terms_p_19": "כל התכנים באתר, כולל טקסטים, תמונות, עיצוב וקוד, מוגנים בזכויות יוצרים השייכות לUrban Balcony. \n            אסור לשכפל, להפיץ או לעשות שימוש מסחרי בתכנים ללא אישור בכתב.",
+      "terms_p_20": "איסוף ושימוש במידע אישי כפופים למדיניות הפרטיות שלנו. השימוש באתר מהווה הסכמה \n            למדיניות הפרטיות כפי שמפורט בנפרד.",
+      "terms_p_21": "החברה רשאית לשנות תנאי שימוש אלה בכל עת. שינויים מהותיים יפורסמו באתר עם הודעה מוקדמת \n            של 30 יום. המשך השימוש לאחר השינוי מהווה הסכמה לתנאים החדשים.",
+      "terms_p_22": "החברה רשאית להפסיק או להגביל את השירות בכל עת, לרבות במקרה של הפרת תנאי השימוש. \n            במקרה של סיום השירות, יישמרו הוראות הסעיפים הרלוונטיים.",
+      "terms_p_23": "תנאי שימוש אלה כפופים לחוקי מדינת ישראל. כל סכסוך יידון בבתי המשפט המוסמכים בישראל, \n            תוך מתן עדיפות לבוררות או גישור במידת האפשר.",
+      "terms_p_24": "לשאלות או הבהרות בנוגע לתנאי השימוש:",
+      "terms_p_25": "© 2025 Urban Balcony. כל הזכויות שמורות.",
+      "terms_p_26": "נוצר באמצעות&nbsp;Zappy",
+      "about_h3_10": "מקצועיות ואיכות",
+      "about_h3_11": "יצירתיות וחדשנות",
+      "home_alt_46": "Urban Balcony",
+      "home_alt_47": "מרפסת עירונית מעוצבת עם גינה ירוקה מלאה בצמחים",
+      "home_alt_48": "תכנון ועיצוב מרפסת עירונית מקצועי",
+      "home_alt_49": "מגוון צמחים ופרחים למרפסת עירונית",
+      "home_alt_50": "מערכת השקיה אוטומטית חכמה למרפסת",
+      "home_alt_51": "משפחה נהנית מהמרפסת הירוקה שלהם",
+      "home_nav_42": "שירותים",
+      "home_nav_43": "אודות",
+      "home_nav_44": "גלריה",
+      "home_nav_45": "צור קשר",
+      "terms_h2_10": "9. שינוי תנאי השימוש",
+      "terms_h2_11": "10. סיום השירות",
+      "terms_h2_12": "11. דין חל ויישוב סכסוכים",
+      "terms_h2_13": "12. הוראות כלליות",
+      "terms_h2_14": "13. פרטי יצירת קשר",
+      "terms_li_32": "\"החברה\" - Urban Balcony",
+      "terms_li_33": "\"המשתמש\" - כל מי שגולש או משתמש באתר",
+      "terms_li_34": "\"השירותים\" - גינון עירוני ועיצוב נוף הניתנים דרך האתר",
+      "terms_li_35": "השימוש באתר למטרות חוקיות בלבד",
+      "terms_li_36": "אי-הפרעה לפעילות האתר או משתמשים אחרים",
+      "terms_li_37": "אי-העלאת תוכן פוגעני, לא חוקי או מזיק",
+      "terms_li_38": "כיבוד זכויות יוצרים וקניין רוחני",
+      "terms_li_39": "אי-ביצוע פעולות שעלולות לפגוע באבטחת האתר",
+      "terms_li_40": "מתן מידע נכון ומדויק בעת הרשמה או הזמנה",
+      "terms_li_41": "שמירה על סודיות פרטי הגישה לחשבון",
+      "terms_li_42": "הודעה מיידית על כל שימוש לא מורשה בחשבון",
+      "terms_li_43": "עדכון מידע אישי במידת הצורך",
+      "terms_li_44": "התשלומים מבוצעים דרך מערכות בטוחות ומוצפנות",
+      "terms_li_45": "המחירים כוללים מע\"ם כנדרש בחוק",
+      "terms_li_46": "זכות ביטול עסקה תעמוד בהתאם לחוק הגנת הצרכן",
+      "terms_li_47": "החזרים יבוצעו תוך 14 ימי עסקים מאישור הביטול",
+      "terms_li_48": "אם חלק מהתנאים יוכרז כבלתי תקף, יישארו שאר התנאים בתוקף",
+      "terms_li_49": "אי-אכיפה של זכות לא תחשב כוויתור עליה",
+      "terms_li_50": "תנאי השימוש מהווים את מלוא ההסכם בין הצדדים",
+      "terms_li_51": "חברה: Urban Balcony",
+      "terms_li_52": "אימייל: Ketem200@gmail.com",
+      "terms_li_53": "טלפון: 050-7333256",
+      "terms_li_54": "כתובת: כתובת החברה, ישראל",
+      "about_alt_39": "Urban Balcony",
+      "about_nav_35": "שירותים",
+      "about_nav_36": "אודות",
+      "about_nav_37": "גלריה",
+      "about_nav_38": "צור קשר",
+      "contact_h1_1": "הפרויקטים שלנו",
+      "contact_h3_2": "גלריית עבודות גינון והקמת מרפסות עירוניות",
+      "contact_h3_3": "מרפסת עירונית מודרנית",
+      "contact_h3_4": "שדרוג גינת גג",
+      "contact_h3_5": "ג'ונגל עירוני במרפסת קטנה",
+      "contact_h3_6": "מערכת השקיה חכמה",
+      "contact_h3_7": "גינת תבלינים עירונית",
+      "contact_h3_8": "מרפסת פנטהאוז יוקרתית",
+      "contact_h3_9": "גינה אנכית",
+      "contact_p_15": "Happily created by&nbsp;Zappy",
+      "contact_p_16": "עיצוב מרפסת עם צמחייה עשירה ופינת ישיבה נעימה",
+      "contact_p_17": "הפיכת גג לגינה עירונית עם מגוון צמחים ופרחים",
+      "contact_p_18": "ניצול מקסימלי של שטח קטן ליצירת פינה ירוקה מרשימה",
+      "contact_p_19": "התקנת מערכת השקיה אוטומטית לגינת מרפסת",
+      "contact_p_20": "מרפסת עם גינת תבלינים טריים לשימוש יומיומי",
+      "contact_p_21": "עיצוב נוף מלא למרפסת פנטהאוז עם צמחייה מגוונת",
+      "contact_p_22": "התקנת גינה אנכית על קיר המרפסת לניצול מרבי של השטח",
+      "contact_p_23": "עיצוב מרפסת עם מגוון סוקולנטים וקקטוסים",
+      "contact_p_24": "עיצוב מרפסת ידידותית למשפחה עם פינת משחקים וצמחייה",
+      "contact_p_25": "מרפסת בעיצוב ים תיכוני עם צמחי ארומה ופרחים",
+      "contact_p_26": "מרפסת בסגנון זן עם צמחייה מינימליסטית ומרגיעה",
+      "contact_p_27": "הפיכת מרפסת רגילה לגן פרחים צבעוני ומרהיב",
+      "contact_p_28": "© 2025 Urban Balcony. כל הזכויות שמורות.",
+      "contact_p_29": "נוצר באמצעות&nbsp;Zappy",
+      "gallery_h1_1": "גלריית הפרויקטים שלנו",
+      "gallery_h2_2": "התהליך שלנו",
+      "gallery_h3_3": "גינת גג יוקרתית - תל אביב",
+      "gallery_h3_4": "גינת גג יוקרתית - תל אביב",
+      "gallery_h3_5": "מרפסת קטנה - רמת גן",
+      "gallery_h3_6": "מרפסת קטנה - רמת גן",
+      "gallery_h3_7": "מרפסת מודרנית - הרצליה",
+      "gallery_h3_8": "מרפסת מודרנית - הרצליה",
+      "gallery_h3_9": "גן פנטהאוז - נתניה",
+      "gallery_p_24": "צפו במרפסות וגגות עירוניים שהפכנו לגנים ירוקים מרהיבים",
+      "gallery_p_25": "כל פרויקט מתחיל בחזון ומסתיים במרחב ירוק ומרגיע שמשנה את חיי היומיום. הגלריה שלנו מציגה מגוון רחב של פרויקטי גינון עירוני - ממרפסות קטנות בדירות עירוניות ועד גגות יוקרתיים. כל פרויקט מתוכנן בקפידה תוך התחשבות בתנאי האקלים, החשיפה לשמש, ורמת התחזוקה הרצויה.",
+      "gallery_p_26": "גג בשטח 120 מ\"ר שהפך לגן עירוני מרהיב עם פינות ישיבה, צמחייה עשירה ומערכת השקיה אוטומטית",
+      "gallery_p_27": "מרפסת של 8 מ\"ר שהפכה לפינת גן אינטימית עם צמחי תבלין, פרחים עונתיים ופינת ישיבה נעימה",
+      "gallery_p_28": "עיצוב מודרני ומינימליסטי עם צמחייה טרופית, תאורה אווירתית ורצפת דק איכותית",
+      "gallery_p_29": "פנטהאוז מרהיב עם גינה בשטח 200 מ\"ר, כולל עצי פרי, ירקות אורגניים ופינת ברביקיו",
+      "gallery_p_30": "פתרון מושלם למרפסת מוצלת עם צמחים אוהבי צל, גינה אנכית ופינת קפה נעימה",
+      "gallery_p_31": "גג עם חשיפה מלאה לשמש, צמחים עמידים, מערכת השקיה חכמה ופרגולה מעוצבת",
+      "gallery_p_32": "פתרון חכם למרפסת קטנה עם גינה אנכית מרהיבה, צמחי נוי ותבלין בשפע",
+      "gallery_p_33": "מרפסת מעוצבת לכל המשפחה עם פינת משחקים ירוקה, ירקות לגידול ביתי ופינת ישיבה מרווחת",
+      "gallery_p_34": "גישה מינימליסטית עם צמחייה נבחרת, עציצים מעוצבים ופלטת צבעים נקייה",
+      "gallery_p_35": "כך אנחנו הופכים את המרפסת שלכם לגן עירוני מרהיב",
+      "gallery_p_36": "נפגש במרפסת שלכם, נבין את הצרכים והחזון שלכם, ונבצע מדידות מדויקות",
+      "gallery_p_37": "נכין עבורכם תוכנית מפורטת עם המלצות לצמחים, חומרים ופתרונות עיצוביים",
+      "gallery_p_38": "הצוות המקצועי שלנו יבצע את העבודה בקפידה ובמקצועיות",
+      "gallery_p_39": "© 2025 Urban Balcony. כל הזכויות שמורות.",
+      "gallery_p_40": "נוצר באמצעות&nbsp;Zappy",
       "home_link_34": "Zappy",
       "home_link_35": "קבלו ייעוץ חינם",
       "home_link_36": "כל השירותים שלנו",
@@ -588,18 +713,77 @@
       "home_link_39": "נגישות",
       "home_link_40": "תנאי שימוש",
       "home_link_41": "Zappy",
-      "home_nav_42": "שירותים",
-      "home_nav_43": "אודות",
-      "home_nav_44": "גלריה",
-      "home_nav_45": "צור קשר",
-      "home_alt_46": "Urban Balcony",
-      "home_alt_47": "מרפסת עירונית מעוצבת עם גינה ירוקה מלאה בצמחים",
-      "home_alt_48": "תכנון ועיצוב מרפסת עירונית מקצועי",
-      "home_alt_49": "מגוון צמחים ופרחים למרפסת עירונית",
-      "home_alt_50": "מערכת השקיה אוטומטית חכמה למרפסת",
-      "home_alt_51": "משפחה נהנית מהמרפסת הירוקה שלהם",
-      "home_meta_description": "גלו את השירות המקצועי של Urban Balcony לעיצוב מרפסות עירוניות. התייעצות חינם עכשיו!",
-      "home_page_title": "הפכו את המרפסת שלכם לגן עירוני — Urban Balcony",
+      "privacy_h1_1": "מדיניות פרטיות",
+      "privacy_h2_2": "1. איסוף מידע",
+      "privacy_h2_3": "2. שימוש במידע",
+      "privacy_h2_4": "3. שיתוף מידע",
+      "privacy_h2_5": "4. זכויות המשתמש",
+      "privacy_h2_6": "5. עוגיות (Cookies)",
+      "privacy_h2_7": "6. אבטחת מידע",
+      "privacy_h2_8": "7. שינויים במדיניות",
+      "privacy_h2_9": "8. יצירת קשר",
+      "privacy_p_10": "Urban Balcony (\"החברה\", \"אנו\", \"שלנו\") מחויבת להגן על פרטיותכם. מדיניות פרטיות זו מסבירה כיצד אנו אוספים, \n            משתמשים ומגינים על המידע שלכם בעת השימוש באתר www.company.com (\"השירות\").",
+      "privacy_p_11": "אנו עשויים לאסוף את סוגי המידע הבאים:",
+      "privacy_p_12": "אנו משתמשים במידע שנאסף למטרות הבאות:",
+      "privacy_p_13": "אנו לא נמכור, נחכיר או נשתף את המידע האישי שלכם עם צדדים שלישיים, למעט במקרים הבאים:",
+      "privacy_p_14": "בהתאם לחוק הגנת הפרטיות התשמ\"א-1981, יש לכם הזכויות הבאות:",
+      "privacy_p_15": "אתרנו משתמש בעוגיות לשיפור חוויית השימוש. ניתן לנהל את העוגיות דרך הגדרות הדפדפן שלכם. \n            השבתת עוגיות עלולה להשפיע על פונקציונליות האתר.",
+      "privacy_p_16": "אנו נוקטים באמצעי אבטחה סבירים להגנה על המידע שלכם, כולל הצפנה, חומות אש ובקרת גישה מוגבלת. \n            עם זאת, אף שיטת העברה או אחסון אינה בטוחה ב-100%.",
+      "privacy_p_17": "אנו עשויים לעדכן מדיניות פרטיות זו מעת לעת. שינויים מהותיים יפורסמו באתר עם הודעה מוקדמת של 30 יום.",
+      "privacy_p_18": "לשאלות או בקשות בנוגע למדיניות פרטיות זו, ניתן לפנות אלינו:",
+      "privacy_p_19": "רשם מאגרי המידע: לתלונות ניתן לפנות לרשם מאגרי המידע במשרד המשפטים",
+      "privacy_p_20": "© 2025 Urban Balcony. כל הזכויות שמורות.",
+      "privacy_p_21": "נוצר באמצעות&nbsp;Zappy",
+      "terms_alt_59": "Urban Balcony",
+      "terms_nav_55": "שירותים",
+      "terms_nav_56": "אודות",
+      "terms_nav_57": "גלריה",
+      "terms_nav_58": "צור קשר",
+      "about_link_29": "Zappy",
+      "about_link_30": "צרו קשר",
+      "about_link_31": "מדיניות פרטיות",
+      "about_link_32": "נגישות",
+      "about_link_33": "תנאי שימוש",
+      "about_link_34": "Zappy",
+      "contact_h3_10": "גינת סוקולנטים",
+      "contact_h3_11": "מרפסת משפחתית",
+      "contact_h3_12": "סגנון ים תיכוני",
+      "contact_h3_13": "עיצוב זן מינימליסטי",
+      "contact_h3_14": "מרפסת פרחים צבעונית",
+      "gallery_h3_10": "גן פנטהאוז - נתניה",
+      "gallery_h3_11": "מרפסת מוצלת - גבעתיים",
+      "gallery_h3_12": "מרפסת מוצלת - גבעתיים",
+      "gallery_h3_13": "גג שטוף שמש - ראשון לציון",
+      "gallery_h3_14": "גג שטוף שמש - ראשון לציון",
+      "gallery_h3_15": "גינה אנכית - חולון",
+      "gallery_h3_16": "גינה אנכית - חולון",
+      "gallery_h3_17": "מרפסת משפחתית - פתח תקווה",
+      "gallery_h3_18": "מרפסת משפחתית - פתח תקווה",
+      "gallery_h3_19": "עיצוב מינימליסטי - כפר סבא",
+      "gallery_h3_20": "עיצוב מינימליסטי - כפר סבא",
+      "gallery_h3_21": "פגישת ייעוץ",
+      "gallery_h3_22": "תכנון ועיצוב",
+      "gallery_h3_23": "ביצוע מקצועי",
+      "privacy_li_27": "מידע אישי: שם, כתובת אימייל, מספר טלפון וכתובת",
+      "privacy_li_28": "מידע טכני: כתובת IP, סוג דפדפן, מערכת הפעלה ונתוני שימוש באתר",
+      "privacy_li_29": "עוגיות: מידע הנשמר במחשבכם לשיפור חוויית השימוש",
+      "privacy_li_30": "מתן השירותים המבוקשים",
+      "privacy_li_31": "שיפור השירות וחוויית המשתמש",
+      "privacy_li_32": "יצירת קשר עמכם בנוגע לשירותינו",
+      "privacy_li_33": "עמידה בדרישות חוקיות",
+      "privacy_li_34": "בהסכמתכם המפורשת",
+      "privacy_li_35": "כאשר נדרש על פי חוק",
+      "privacy_li_36": "להגנה על זכויותינו או בטחון משתמשינו",
+      "privacy_li_37": "עם ספקי שירות המסייעים בהפעלת השירות (תחת הסכמי סודיות)",
+      "privacy_li_38": "זכות עיון במידע האישי השמור עליכם",
+      "privacy_li_39": "זכות לתיקון מידע שגוי או לא מדויק",
+      "privacy_li_40": "זכות למחיקת מידע אישי בנסיבות מסוימות",
+      "privacy_li_41": "זכות להתנגד לעיבוד מידע למטרות שיווק",
+      "privacy_li_42": "זכות להגשת תלונה לרשם מאגרי המידע",
+      "privacy_li_43": "חברה: Urban Balcony",
+      "privacy_li_44": "אימייל: Ketem200@gmail.com",
+      "privacy_li_45": "טלפון: 050-7333256",
+      "privacy_li_46": "כתובת: כתובת החברה, ישראל",
       "services_h1_1": "השירותים המקצועיים שלנו",
       "services_h2_2": "תכנון ועיצוב מרפסות עירוניות",
       "services_h2_3": "בחירה והתקנת צמחים",
@@ -629,104 +813,11 @@
       "services_p_27": "צרו קשר עוד היום לקבלת ייעוץ מקצועי והצעת מחיר מותאמת אישית. נשמח לעזור לכם להגשים את חזון המרפסת הירוקה שלכם!",
       "services_p_28": "© 2025 Urban Balcony. כל הזכויות שמורות.",
       "services_p_29": "נוצר באמצעות&nbsp;Zappy",
-      "services_link_30": "Zappy",
-      "services_link_31": "קבלו הצעת מחיר",
-      "services_link_32": "מדיניות פרטיות",
-      "services_link_33": "נגישות",
-      "services_link_34": "תנאי שימוש",
-      "services_link_35": "Zappy",
-      "services_nav_36": "שירותים",
-      "services_nav_37": "אודות",
-      "services_nav_38": "גלריה",
-      "services_nav_39": "צור קשר",
-      "services_alt_40": "Urban Balcony",
-      "services_alt_41": "תכנון מפורט של עיצוב מרפסת עירונית",
-      "services_alt_42": "מגוון צמחים מתאימים לגינון עירוני",
-      "services_alt_43": "מערכת השקיה חכמה אוטומטית למרפסת",
-      "services_alt_44": "תחזוקה מקצועית של גינת מרפסת עירונית",
-      "services_alt_45": "מרפסת אקולוגית עם פתרונות גינון קיימים",
-      "services_alt_46": "גינת גג יוקרתית עם עיצוב נוף מתוחכם",
-      "services_meta_description": "שירותי urban jungle balcony מקצועיים המותאמים לצרכים שלכם. תכנון, עיצוב, ותחזוקה של מרפסות עירוניות.",
-      "services_page_title": "שירותי urban jungle balcony מקצועיים — Urban Balcony",
-      "about_h1_1": "הסיפור שלנו",
-      "about_h2_2": "איך הכל התחיל",
-      "about_h2_3": "הערכים שמנחים אותנו",
-      "about_h2_4": "המשימה שלנו",
-      "about_h2_5": "הצוות המקצועי שלנו",
-      "about_h2_6": "רוצים להצטרף למשפחת הלקוחות שלנו?",
-      "about_h3_7": "מומחים בהפיכת מרפסות עירוניות למרחבים ירוקים ומרגיעים",
-      "about_h3_8": "מחויבות ללקוח",
-      "about_h3_9": "אחריות סביבתית",
-      "about_h3_10": "מקצועיות ואיכות",
-      "about_h3_11": "יצירתיות וחדשנות",
-      "about_p_12": "Happily created by&nbsp;Zappy",
-      "about_p_13": "Urban Balcony נולד מתוך אהבה עמוקה לטבע ותשוקה לעיצוב. הסיפור שלנו התחיל לפני מספר שנים, כאשר גילינו כמה קשה למצוא פתרונות איכוtiים וממוקדי לקוח לגינון מרפסות עירוניות. רבים מבעלי הדירות בעיר חלמו על מרחב ירוק פרטי, אבל לא ידעו כיצד להתחיל או איזה צמחים יתאימו לתנאים הייחודיים של הסביבה העירונית.",
-      "about_p_14": "החלטנו ליצור עסק שמתמחה בדיוק בזה - בהפיכת מרפסות וגגות עירוניים למרחבים ירוקים ומזמינים. התחלנו עם כמה פרויקטים קטנים, ובזכות המחויבות שלנו לאיכות, לשירות אישי ולתוצאות מרשימות, המוניטין שלנו גדל במהירות. היום, אנחנו גאים להיות אחד מהספקים המובילים של שירותי גינון עירוני ועיצוב נוף למרפסות באזור.",
-      "about_p_15": "הפילוסופיה שלנו פשוטה: כל מרפסת, גם הקטנה ביותר, יכולה להפוך למקלט ירוק שמשפר את איכות החיים, מחבר אותנו לטבע, ומספק מרחב מרגיע ומעורר השראה. אנחנו מאמינים שהגינון העירוני הוא לא רק על צמחים יפים, אלא גם על יצירת סביבה בריאה, קיימא, ומזמינה שמשקפת את האישיות והסגנון של כל לקוח.",
-      "about_p_16": "אנחנו מאמינים שכל לקוח ייחודי ומגיע לו שירות אישי ומותאם. אנחנו מקשיבים לצרכים, מבינים את החזון, ועובדים בשקיפות מלאה כדי להגשים את המרפסת המושלמת עבורכם.",
-      "about_p_17": "אנחנו דואגים לסביבה ומשתמשים בשיטות גינון אקולוגיות וקיימות. בחירת צמחים מקומיים, חיסכון במים, ושימוש בדשנים אורגניים הם חלק בלתי נפרד מהעבודה שלנו.",
-      "about_p_18": "הצוות שלנו מורכב ממומחים מנוסים בתחומי הגינון, עיצוב הנוף, והשקיה. אנחנו משתמשים בחומרי גלם איכותיים ביותר ומקפידים על ביצוע מושלם בכל פרויקט.",
-      "about_p_19": "אנחנו תמיד מחפשים פתרונות חדשניים ויצירתיים כדי למקסם את הפוטנציאל של כל מרפסת. מטכנולוגיות השקיה חכמות ועד עיצובים ייחודיים - אנחנו לא מפחדים לחשוב מחוץ לקופסה.",
-      "about_p_20": "המשימה של Urban Balcony היא להפוך את הסביבה העירונית לירוקה ובריאה יותר, מרפסת אחת בכל פעם. אנחנו מאמינים שגינון עירוני הוא לא רק טרנד, אלא צורך חיוני בעולם המודרני. המרפסות והגגות שלנו הם המקום המושלם להביא את הטבע חזרה אל תוך הבית העירוני, לשפר את איכות האוויר, ולספק מרחב מרגיע ומעורר השראה.",
-      "about_p_21": "אנחנו שואפים להיות המובילים בתחום הגינון העירוני בישראל, ולהמשיך לחדש ולשפר את השירותים שלנו כדי לענות על הצרכים המשתנים של הלקוחות שלנו. אנחנו רוצים שכל אדם שמתגורר בעיר יוכל ליהנות מחוויית the urban balcony - מרחב ירוק פרטי שמחבר אותנו לטבע ומשפר את איכות החיים.",
-      "about_p_22": "בנוסף, אנחנו מחויבים לחינוך ולהעלאת המודעות לגבי חשיבות הגינון העירוני והקיימות הסביבתית. אנחנו משתפים את הידע והניסיון שלנו עם הלקוחות, מארגנים סדנאות וימי עיון, ותומכים בפרויקטים קהילתיים שמקדמים את הירוק העירוני.",
-      "about_p_23": "הצוות של Urban Balcony מורכב ממומחים מנוסים בתחומי הגינון, עיצוב הנוף, ההשקיה, והתחזוקה. כל חבר צוות מביא איתו ידע עמוק, ניסיון רב שנים, ותשוקה אמיתית לעבודה. אנחנו עובדים כצוות מגובש ומחויב, ומקפידים על תקשורת פתוחה ושקופה עם הלקוחות שלנו.",
-      "about_p_24": "הצוות שלנו כולל מעצבי נוף בעלי תואר אקדמי, גננים מוסמכים, טכנאי השקיה מקצועיים, ואנשי שירות מסורים. כל אחד מאיתנו מביא את המומחיות הייחודית שלו, ויחד אנחנו יוצרים פתרונות מקיפים ואיכותיים שעומדים בסטנדרטים הגבוהים ביותר.",
-      "about_p_25": "אנחנו גאים בצוות שלנו ובמחויבות שלו למצוינות, לשירות אישי, ולשביעות רצון הלקוחות. כל פרויקט הוא הזדמנות עבורנו להוכיח את המקצועיות והמסירות שלנו, וליצור מרפסת שתעניק שנים של הנאה ושביעות רצון.",
-      "about_p_26": "נשמח לעזור לכם להגשים את חזון המרפסת הירוקה שלכם. צרו קשר עוד היום לקבלת ייעוץ חינם ולהתחיל את המסע המרגש של יצירת urban jungle balcony משלכם!",
-      "about_p_27": "© 2025 Urban Balcony. כל הזכויות שמורות.",
-      "about_p_28": "נוצר באמצעות&nbsp;Zappy",
-      "about_link_29": "Zappy",
-      "about_link_30": "צרו קשר",
-      "about_link_31": "מדיניות פרטיות",
-      "about_link_32": "נגישות",
-      "about_link_33": "תנאי שימוש",
-      "about_link_34": "Zappy",
-      "about_nav_35": "שירותים",
-      "about_nav_36": "אודות",
-      "about_nav_37": "גלריה",
-      "about_nav_38": "צור קשר",
-      "about_alt_39": "Urban Balcony",
-      "about_meta_description": "הכירו את הצוות המקצועי של Urban Balcony - מומחים בגינון עירוני ועיצוב נוף למרפסות וגגות.",
-      "about_page_title": "הסיפור שלנו — Urban Balcony",
-      "contact_h1_1": "הפרויקטים שלנו",
-      "contact_h3_2": "גלריית עבודות גינון והקמת מרפסות עירוניות",
-      "contact_h3_3": "מרפסת עירונית מודרנית",
-      "contact_h3_4": "שדרוג גינת גג",
-      "contact_h3_5": "ג'ונגל עירוני במרפסת קטנה",
-      "contact_h3_6": "מערכת השקיה חכמה",
-      "contact_h3_7": "גינת תבלינים עירונית",
-      "contact_h3_8": "מרפסת פנטהאוז יוקרתית",
-      "contact_h3_9": "גינה אנכית",
-      "contact_h3_10": "גינת סוקולנטים",
-      "contact_h3_11": "מרפסת משפחתית",
-      "contact_h3_12": "סגנון ים תיכוני",
-      "contact_h3_13": "עיצוב זן מינימליסטי",
-      "contact_h3_14": "מרפסת פרחים צבעונית",
-      "contact_p_15": "Happily created by&nbsp;Zappy",
-      "contact_p_16": "עיצוב מרפסת עם צמחייה עשירה ופינת ישיבה נעימה",
-      "contact_p_17": "הפיכת גג לגינה עירונית עם מגוון צמחים ופרחים",
-      "contact_p_18": "ניצול מקסימלי של שטח קטן ליצירת פינה ירוקה מרשימה",
-      "contact_p_19": "התקנת מערכת השקיה אוטומטית לגינת מרפסת",
-      "contact_p_20": "מרפסת עם גינת תבלינים טריים לשימוש יומיומי",
-      "contact_p_21": "עיצוב נוף מלא למרפסת פנטהאוז עם צמחייה מגוונת",
-      "contact_p_22": "התקנת גינה אנכית על קיר המרפסת לניצול מרבי של השטח",
-      "contact_p_23": "עיצוב מרפסת עם מגוון סוקולנטים וקקטוסים",
-      "contact_p_24": "עיצוב מרפסת ידידותית למשפחה עם פינת משחקים וצמחייה",
-      "contact_p_25": "מרפסת בעיצוב ים תיכוני עם צמחי ארומה ופרחים",
-      "contact_p_26": "מרפסת בסגנון זן עם צמחייה מינימליסטית ומרגיעה",
-      "contact_p_27": "הפיכת מרפסת רגילה לגן פרחים צבעוני ומרהיב",
-      "contact_p_28": "© 2025 Urban Balcony. כל הזכויות שמורות.",
-      "contact_p_29": "נוצר באמצעות&nbsp;Zappy",
-      "contact_link_30": "Zappy",
-      "contact_link_31": "מדיניות פרטיות",
-      "contact_link_32": "נגישות",
-      "contact_link_33": "תנאי שימוש",
-      "contact_link_34": "Zappy",
-      "contact_nav_35": "שירותים",
-      "contact_nav_36": "אודות",
-      "contact_nav_37": "גלריה",
-      "contact_nav_38": "צור קשר",
+      "terms_link_27": "Ketem200@gmail.com",
+      "terms_link_28": "מדיניות פרטיות",
+      "terms_link_29": "נגישות",
+      "terms_link_30": "תנאי שימוש",
+      "terms_link_31": "Zappy",
       "contact_alt_39": "Urban Balcony",
       "contact_alt_40": "מרפסת עירונית מודרנית עם צמחים ירוקים ופינת ישיבה",
       "contact_alt_41": "גינת גג עם צמחים מגוונים",
@@ -740,218 +831,39 @@
       "contact_alt_49": "מרפסת בסגנון ים תיכוני",
       "contact_alt_50": "עיצוב מרפסת מינימליסטי זן",
       "contact_alt_51": "שדרוג מרפסת עם פרחים צבעוניים",
-      "contact_meta_description": "צרו קשר עם Urban Balcony לקבלת ייעוץ חינם והצעת מחיר. נשמח לעזור לכם ליצור את המרפסת הירוקה שלכם!",
-      "contact_page_title": "צרו קשר איתנו — Urban Balcony",
-      "privacy_h1_1": "מדיניות פרטיות",
-      "privacy_h2_2": "1. איסוף מידע",
-      "privacy_h2_3": "2. שימוש במידע",
-      "privacy_h2_4": "3. שיתוף מידע",
-      "privacy_h2_5": "4. זכויות המשתמש",
-      "privacy_h2_6": "5. עוגיות (Cookies)",
-      "privacy_h2_7": "6. אבטחת מידע",
-      "privacy_h2_8": "7. שינויים במדיניות",
-      "privacy_h2_9": "8. יצירת קשר",
-      "privacy_p_10": "Urban Balcony (\"החברה\", \"אנו\", \"שלנו\") מחויבת להגן על פרטיותכם. מדיניות פרטיות זו מסבירה כיצד אנו אוספים, \n            משתמשים ומגינים על המידע שלכם בעת השימוש באתר www.company.com (\"השירות\").",
-      "privacy_p_11": "אנו עשויים לאסוף את סוגי המידע הבאים:",
-      "privacy_p_12": "אנו משתמשים במידע שנאסף למטרות הבאות:",
-      "privacy_p_13": "אנו לא נמכור, נחכיר או נשתף את המידע האישי שלכם עם צדדים שלישיים, למעט במקרים הבאים:",
-      "privacy_p_14": "בהתאם לחוק הגנת הפרטיות התשמ\"א-1981, יש לכם הזכויות הבאות:",
-      "privacy_p_15": "אתרנו משתמש בעוגיות לשיפור חוויית השימוש. ניתן לנהל את העוגיות דרך הגדרות הדפדפן שלכם. \n            השבתת עוגיות עלולה להשפיע על פונקציונליות האתר.",
-      "privacy_p_16": "אנו נוקטים באמצעי אבטחה סבירים להגנה על המידע שלכם, כולל הצפנה, חומות אש ובקרת גישה מוגבלת. \n            עם זאת, אף שיטת העברה או אחסון אינה בטוחה ב-100%.",
-      "privacy_p_17": "אנו עשויים לעדכן מדיניות פרטיות זו מעת לעת. שינויים מהותיים יפורסמו באתר עם הודעה מוקדמת של 30 יום.",
-      "privacy_p_18": "לשאלות או בקשות בנוגע למדיניות פרטיות זו, ניתן לפנות אלינו:",
-      "privacy_p_19": "רשם מאגרי המידע: לתלונות ניתן לפנות לרשם מאגרי המידע במשרד המשפטים",
-      "privacy_p_20": "© 2025 Urban Balcony. כל הזכויות שמורות.",
-      "privacy_p_21": "נוצר באמצעות&nbsp;Zappy",
-      "privacy_link_22": "Ketem200@gmail.com",
-      "privacy_link_23": "מדיניות פרטיות",
-      "privacy_link_24": "נגישות",
-      "privacy_link_25": "תנאי שימוש",
-      "privacy_link_26": "Zappy",
-      "privacy_li_27": "מידע אישי: שם, כתובת אימייל, מספר טלפון וכתובת",
-      "privacy_li_28": "מידע טכני: כתובת IP, סוג דפדפן, מערכת הפעלה ונתוני שימוש באתר",
-      "privacy_li_29": "עוגיות: מידע הנשמר במחשבכם לשיפור חוויית השימוש",
-      "privacy_li_30": "מתן השירותים המבוקשים",
-      "privacy_li_31": "שיפור השירות וחוויית המשתמש",
-      "privacy_li_32": "יצירת קשר עמכם בנוגע לשירותינו",
-      "privacy_li_33": "עמידה בדרישות חוקיות",
-      "privacy_li_34": "בהסכמתכם המפורשת",
-      "privacy_li_35": "כאשר נדרש על פי חוק",
-      "privacy_li_36": "להגנה על זכויותינו או בטחון משתמשינו",
-      "privacy_li_37": "עם ספקי שירות המסייעים בהפעלת השירות (תחת הסכמי סודיות)",
-      "privacy_li_38": "זכות עיון במידע האישי השמור עליכם",
-      "privacy_li_39": "זכות לתיקון מידע שגוי או לא מדויק",
-      "privacy_li_40": "זכות למחיקת מידע אישי בנסיבות מסוימות",
-      "privacy_li_41": "זכות להתנגד לעיבוד מידע למטרות שיווק",
-      "privacy_li_42": "זכות להגשת תלונה לרשם מאגרי המידע",
-      "privacy_li_43": "חברה: Urban Balcony",
-      "privacy_li_44": "אימייל: Ketem200@gmail.com",
-      "privacy_li_45": "טלפון: 050-7333256",
-      "privacy_li_46": "כתובת: כתובת החברה, ישראל",
+      "contact_nav_35": "שירותים",
+      "contact_nav_36": "אודות",
+      "contact_nav_37": "גלריה",
+      "contact_nav_38": "צור קשר",
+      "gallery_alt_76": "Urban Balcony",
+      "gallery_alt_77": "גינת גג יוקרתית בתל אביב",
+      "gallery_alt_78": "מרפסת קטנה ברמת גן",
+      "gallery_alt_79": "מרפסת מודרנית בהרצליה",
+      "gallery_alt_80": "גן פנטהאוז בנתניה",
+      "gallery_alt_81": "מרפסת מוצלת בגבעתיים",
+      "gallery_alt_82": "גג שטוף שמש בראשון לציון",
+      "gallery_alt_83": "גינה אנכית בחולון",
+      "gallery_alt_84": "מרפסת משפחתית בפתח תקווה",
+      "gallery_alt_85": "עיצוב מינימליסטי בכפר סבא",
+      "gallery_alt_86": "Image",
+      "gallery_nav_72": "שירותים",
+      "gallery_nav_73": "אודות",
+      "gallery_nav_74": "גלריה",
+      "gallery_nav_75": "צור קשר",
+      "privacy_alt_51": "Urban Balcony",
       "privacy_nav_47": "שירותים",
       "privacy_nav_48": "אודות",
       "privacy_nav_49": "גלריה",
       "privacy_nav_50": "צור קשר",
-      "privacy_alt_51": "Urban Balcony",
-      "privacy_meta_description": "מדיניות הפרטיות שלנו - כיצד אנו אוספים, משתמשים ומגנים על המידע שלכם",
-      "privacy_page_title": "מדיניות פרטיות",
-      "accessibility_h1_1": "הצהרת נגישות",
-      "accessibility_h2_2": "1. מדיניות הנגישות",
-      "accessibility_h2_3": "2. הסדרי הנגישות באתר",
-      "accessibility_h2_4": "3. טכנולוגיות מסייעות נתמכות",
-      "accessibility_h2_5": "4. בדיקות נגישות",
-      "accessibility_h2_6": "5. שיפורים מתמשכים",
-      "accessibility_h2_7": "6. יצירת קשר ומשוב",
-      "accessibility_h3_8": "תאימות לתקן WCAG 2.1",
-      "accessibility_p_9": "Urban Balcony מחויבת להנגיש את השירותים לכלל הציבור. אנו פועלים ליישם את הנחיות התקן הישראלי \n            (ת\"י 5568) המבוסס על הנחיות WCAG 2.1 ברמת AA.",
-      "accessibility_p_10": "אנו מאמינים בשוויון זכויות ובזכותו של כל אדם לקבל מידע ושירותים בצורה עצמאית ושוויונית. \n            אתר זה תוכנן ונבנה תוך מתן דגש מיוחד על נגישות לאנשים עם מוגבלויות.",
-      "accessibility_p_11": "האתר תואם לרמת AA של תקן WCAG 2.1, הכולל:",
-      "accessibility_p_12": "האתר נבדק באמצעות:",
-      "accessibility_p_13": "אנו עובדים באופן מתמשך לשיפור נגישות האתר ומעדכנים אותו בהתאם להתפתחויות טכנולוגיות ולמשוב מהמשתמשים.",
-      "accessibility_p_14": "אם נתקלתם בבעיית נגישות באתר או זקוקים לסיוע, אנא פנו אלינו:",
-      "accessibility_p_15": "זמני מענה: נענה לפניות בנושא נגישות תוך 3 ימי עסקים ונפעל לפתרון תוך 10 ימי עסקים.",
-      "accessibility_p_16": "תלונות: ניתן להגיש תלונה למשרד המשפטים - הנציבות לשוויון זכויות לאנשים עם מוגבלות",
-      "accessibility_p_17": "© 2025 Urban Balcony. כל הזכויות שמורות.",
-      "accessibility_p_18": "נוצר באמצעות&nbsp;Zappy",
-      "accessibility_link_19": "Ketem200@gmail.com",
-      "accessibility_link_20": "מדיניות פרטיות",
-      "accessibility_link_21": "נגישות",
-      "accessibility_link_22": "תנאי שימוש",
-      "accessibility_link_23": "Zappy",
-      "accessibility_li_24": "תמיכה בניווט באמצעות מקלדת",
-      "accessibility_li_25": "תמיכה בקוראי מסך",
-      "accessibility_li_26": "ניגודיות צבעים מתאימה",
-      "accessibility_li_27": "גדלי פונט גמישים וניתנים להגדלה",
-      "accessibility_li_28": "תיאורי תמונות (Alt text) מפורטים",
-      "accessibility_li_29": "כותרות מובנות היררכית",
-      "accessibility_li_30": "קישורים תיאוריים וברורים",
-      "accessibility_li_31": "תמיכה בזום עד 200% ללא אובדן תוכן",
-      "accessibility_li_32": "נתפס (Perceivable): המידע מוצג בדרכים שמשתמשים יכולים לתפוס",
-      "accessibility_li_33": "פעיל (Operable): רכיבי הממשק ניתנים להפעלה",
-      "accessibility_li_34": "מובן (Understandable): המידע וממשק המשתמש מובנים",
-      "accessibility_li_35": "חזק (Robust): התוכן יכול להיות מפוענח על ידי מגוון טכנולוגיות",
-      "accessibility_li_36": "NVDA (Windows)",
-      "accessibility_li_37": "JAWS (Windows)",
-      "accessibility_li_38": "VoiceOver (Mac/iOS)",
-      "accessibility_li_39": "TalkBack (Android)",
-      "accessibility_li_40": "Dragon NaturallySpeaking",
-      "accessibility_li_41": "Switch navigation",
-      "accessibility_li_42": "כלים אוטומטיים לבדיקת נגישות",
-      "accessibility_li_43": "בדיקות ידניות עם קוראי מסך",
-      "accessibility_li_44": "ניווט באמצעות מקלדת בלבד",
-      "accessibility_li_45": "בדיקת ניגודיות צבעים",
-      "accessibility_li_46": "בדיקה עם משתמשים עם מוגבלויות",
-      "accessibility_li_47": "חברה: Urban Balcony",
-      "accessibility_li_48": "אימייל: Ketem200@gmail.com",
-      "accessibility_li_49": "טלפון: 050-7333256",
-      "accessibility_nav_50": "שירותים",
-      "accessibility_nav_51": "אודות",
-      "accessibility_nav_52": "גלריה",
-      "accessibility_nav_53": "צור קשר",
-      "accessibility_alt_54": "Urban Balcony",
-      "accessibility_meta_description": "הצהרת הנגישות שלנו - מחויבותנו לנגישות דיגיטלית",
-      "accessibility_page_title": "הצהרת נגישות",
-      "terms_h1_1": "תנאי שימוש",
-      "terms_h2_2": "1. הגדרות",
-      "terms_h2_3": "2. תיאור השירותים",
-      "terms_h2_4": "3. תנאי השימוש",
-      "terms_h2_5": "4. חובות המשתמש",
-      "terms_h2_6": "5. מדיניות תשלומים והחזרים",
-      "terms_h2_7": "6. הגבלת אחריות",
-      "terms_h2_8": "7. זכויות יוצרים וקניין רוחני",
-      "terms_h2_9": "8. פרטיות",
-      "terms_h2_10": "9. שינוי תנאי השימוש",
-      "terms_h2_11": "10. סיום השירות",
-      "terms_h2_12": "11. דין חל ויישוב סכסוכים",
-      "terms_h2_13": "12. הוראות כלליות",
-      "terms_h2_14": "13. פרטי יצירת קשר",
-      "terms_p_15": "Urban Balcony מספקת גינון עירוני ועיצוב נוף דרך האתר. השירותים כפופים לתנאים המפורטים במסמך זה \n            ועשויים להשתנות מעת לעת.",
-      "terms_p_16": "השימוש באתר מותנה בעמידה בתנאים הבאים:",
-      "terms_p_17": "במידה והשירותים כוללים תשלום:",
-      "terms_p_18": "השירותים ניתנים \"כפי שהם\" ללא אחריות מכל סוג. החברה לא תהיה אחראית לנזקים עקיפים, \n            תוצאתיים או מיוחדים הנובעים משימוש באתר, למעט במקרים בהם החוק קובע אחרת.",
-      "terms_p_19": "כל התכנים באתר, כולל טקסטים, תמונות, עיצוב וקוד, מוגנים בזכויות יוצרים השייכות לUrban Balcony. \n            אסור לשכפל, להפיץ או לעשות שימוש מסחרי בתכנים ללא אישור בכתב.",
-      "terms_p_20": "איסוף ושימוש במידע אישי כפופים למדיניות הפרטיות שלנו. השימוש באתר מהווה הסכמה \n            למדיניות הפרטיות כפי שמפורט בנפרד.",
-      "terms_p_21": "החברה רשאית לשנות תנאי שימוש אלה בכל עת. שינויים מהותיים יפורסמו באתר עם הודעה מוקדמת \n            של 30 יום. המשך השימוש לאחר השינוי מהווה הסכמה לתנאים החדשים.",
-      "terms_p_22": "החברה רשאית להפסיק או להגביל את השירות בכל עת, לרבות במקרה של הפרת תנאי השימוש. \n            במקרה של סיום השירות, יישמרו הוראות הסעיפים הרלוונטיים.",
-      "terms_p_23": "תנאי שימוש אלה כפופים לחוקי מדינת ישראל. כל סכסוך יידון בבתי המשפט המוסמכים בישראל, \n            תוך מתן עדיפות לבוררות או גישור במידת האפשר.",
-      "terms_p_24": "לשאלות או הבהרות בנוגע לתנאי השימוש:",
-      "terms_p_25": "© 2025 Urban Balcony. כל הזכויות שמורות.",
-      "terms_p_26": "נוצר באמצעות&nbsp;Zappy",
-      "terms_link_27": "Ketem200@gmail.com",
-      "terms_link_28": "מדיניות פרטיות",
-      "terms_link_29": "נגישות",
-      "terms_link_30": "תנאי שימוש",
-      "terms_link_31": "Zappy",
-      "terms_li_32": "\"החברה\" - Urban Balcony",
-      "terms_li_33": "\"המשתמש\" - כל מי שגולש או משתמש באתר",
-      "terms_li_34": "\"השירותים\" - גינון עירוני ועיצוב נוף הניתנים דרך האתר",
-      "terms_li_35": "השימוש באתר למטרות חוקיות בלבד",
-      "terms_li_36": "אי-הפרעה לפעילות האתר או משתמשים אחרים",
-      "terms_li_37": "אי-העלאת תוכן פוגעני, לא חוקי או מזיק",
-      "terms_li_38": "כיבוד זכויות יוצרים וקניין רוחני",
-      "terms_li_39": "אי-ביצוע פעולות שעלולות לפגוע באבטחת האתר",
-      "terms_li_40": "מתן מידע נכון ומדויק בעת הרשמה או הזמנה",
-      "terms_li_41": "שמירה על סודיות פרטי הגישה לחשבון",
-      "terms_li_42": "הודעה מיידית על כל שימוש לא מורשה בחשבון",
-      "terms_li_43": "עדכון מידע אישי במידת הצורך",
-      "terms_li_44": "התשלומים מבוצעים דרך מערכות בטוחות ומוצפנות",
-      "terms_li_45": "המחירים כוללים מע\"ם כנדרש בחוק",
-      "terms_li_46": "זכות ביטול עסקה תעמוד בהתאם לחוק הגנת הצרכן",
-      "terms_li_47": "החזרים יבוצעו תוך 14 ימי עסקים מאישור הביטול",
-      "terms_li_48": "אם חלק מהתנאים יוכרז כבלתי תקף, יישארו שאר התנאים בתוקף",
-      "terms_li_49": "אי-אכיפה של זכות לא תחשב כוויתור עליה",
-      "terms_li_50": "תנאי השימוש מהווים את מלוא ההסכם בין הצדדים",
-      "terms_li_51": "חברה: Urban Balcony",
-      "terms_li_52": "אימייל: Ketem200@gmail.com",
-      "terms_li_53": "טלפון: 050-7333256",
-      "terms_li_54": "כתובת: כתובת החברה, ישראל",
-      "terms_nav_55": "שירותים",
-      "terms_nav_56": "אודות",
-      "terms_nav_57": "גלריה",
-      "terms_nav_58": "צור קשר",
-      "terms_alt_59": "Urban Balcony",
-      "terms_meta_description": "תנאי השימוש באתר - הזכויות והחובות של המשתמשים",
-      "terms_page_title": "תנאי שימוש",
-      "gallery_h1_1": "גלריית הפרויקטים שלנו",
-      "gallery_h2_2": "התהליך שלנו",
-      "gallery_h3_3": "גינת גג יוקרתית - תל אביב",
-      "gallery_h3_4": "גינת גג יוקרתית - תל אביב",
-      "gallery_h3_5": "מרפסת קטנה - רמת גן",
-      "gallery_h3_6": "מרפסת קטנה - רמת גן",
-      "gallery_h3_7": "מרפסת מודרנית - הרצליה",
-      "gallery_h3_8": "מרפסת מודרנית - הרצליה",
-      "gallery_h3_9": "גן פנטהאוז - נתניה",
-      "gallery_h3_10": "גן פנטהאוז - נתניה",
-      "gallery_h3_11": "מרפסת מוצלת - גבעתיים",
-      "gallery_h3_12": "מרפסת מוצלת - גבעתיים",
-      "gallery_h3_13": "גג שטוף שמש - ראשון לציון",
-      "gallery_h3_14": "גג שטוף שמש - ראשון לציון",
-      "gallery_h3_15": "גינה אנכית - חולון",
-      "gallery_h3_16": "גינה אנכית - חולון",
-      "gallery_h3_17": "מרפסת משפחתית - פתח תקווה",
-      "gallery_h3_18": "מרפסת משפחתית - פתח תקווה",
-      "gallery_h3_19": "עיצוב מינימליסטי - כפר סבא",
-      "gallery_h3_20": "עיצוב מינימליסטי - כפר סבא",
-      "gallery_h3_21": "פגישת ייעוץ",
-      "gallery_h3_22": "תכנון ועיצוב",
-      "gallery_h3_23": "ביצוע מקצועי",
-      "gallery_p_24": "צפו במרפסות וגגות עירוניים שהפכנו לגנים ירוקים מרהיבים",
-      "gallery_p_25": "כל פרויקט מתחיל בחזון ומסתיים במרחב ירוק ומרגיע שמשנה את חיי היומיום. הגלריה שלנו מציגה מגוון רחב של פרויקטי גינון עירוני - ממרפסות קטנות בדירות עירוניות ועד גגות יוקרתיים. כל פרויקט מתוכנן בקפידה תוך התחשבות בתנאי האקלים, החשיפה לשמש, ורמת התחזוקה הרצויה.",
-      "gallery_p_26": "גג בשטח 120 מ\"ר שהפך לגן עירוני מרהיב עם פינות ישיבה, צמחייה עשירה ומערכת השקיה אוטומטית",
-      "gallery_p_27": "מרפסת של 8 מ\"ר שהפכה לפינת גן אינטימית עם צמחי תבלין, פרחים עונתיים ופינת ישיבה נעימה",
-      "gallery_p_28": "עיצוב מודרני ומינימליסטי עם צמחייה טרופית, תאורה אווירתית ורצפת דק איכותית",
-      "gallery_p_29": "פנטהאוז מרהיב עם גינה בשטח 200 מ\"ר, כולל עצי פרי, ירקות אורגניים ופינת ברביקיו",
-      "gallery_p_30": "פתרון מושלם למרפסת מוצלת עם צמחים אוהבי צל, גינה אנכית ופינת קפה נעימה",
-      "gallery_p_31": "גג עם חשיפה מלאה לשמש, צמחים עמידים, מערכת השקיה חכמה ופרגולה מעוצבת",
-      "gallery_p_32": "פתרון חכם למרפסת קטנה עם גינה אנכית מרהיבה, צמחי נוי ותבלין בשפע",
-      "gallery_p_33": "מרפסת מעוצבת לכל המשפחה עם פינת משחקים ירוקה, ירקות לגידול ביתי ופינת ישיבה מרווחת",
-      "gallery_p_34": "גישה מינימליסטית עם צמחייה נבחרת, עציצים מעוצבים ופלטת צבעים נקייה",
-      "gallery_p_35": "כך אנחנו הופכים את המרפסת שלכם לגן עירוני מרהיב",
-      "gallery_p_36": "נפגש במרפסת שלכם, נבין את הצרכים והחזון שלכם, ונבצע מדידות מדויקות",
-      "gallery_p_37": "נכין עבורכם תוכנית מפורטת עם המלצות לצמחים, חומרים ופתרונות עיצוביים",
-      "gallery_p_38": "הצוות המקצועי שלנו יבצע את העבודה בקפידה ובמקצועיות",
-      "gallery_p_39": "© 2025 Urban Balcony. כל הזכויות שמורות.",
-      "gallery_p_40": "נוצר באמצעות&nbsp;Zappy",
+      "contact_link_30": "Zappy",
+      "contact_link_31": "מדיניות פרטיות",
+      "contact_link_32": "נגישות",
+      "contact_link_33": "תנאי שימוש",
+      "contact_link_34": "Zappy",
+      "gallery_link_68": "מדיניות פרטיות",
+      "gallery_link_69": "נגישות",
+      "gallery_link_70": "תנאי שימוש",
+      "gallery_link_71": "Zappy",
       "gallery_span_41": "גג",
       "gallery_span_42": "120 מ\"ר",
       "gallery_span_43": "השקיה אוטומטית",
@@ -979,27 +891,98 @@
       "gallery_span_65": "מרפסת",
       "gallery_span_66": "20 מ\"ר",
       "gallery_span_67": "מינימליזם",
-      "gallery_link_68": "מדיניות פרטיות",
-      "gallery_link_69": "נגישות",
-      "gallery_link_70": "תנאי שימוש",
-      "gallery_link_71": "Zappy",
-      "gallery_nav_72": "שירותים",
-      "gallery_nav_73": "אודות",
-      "gallery_nav_74": "גלריה",
-      "gallery_nav_75": "צור קשר",
-      "gallery_alt_76": "Urban Balcony",
-      "gallery_alt_77": "גינת גג יוקרתית בתל אביב",
-      "gallery_alt_78": "מרפסת קטנה ברמת גן",
-      "gallery_alt_79": "מרפסת מודרנית בהרצליה",
-      "gallery_alt_80": "גן פנטהאוז בנתניה",
-      "gallery_alt_81": "מרפסת מוצלת בגבעתיים",
-      "gallery_alt_82": "גג שטוף שמש בראשון לציון",
-      "gallery_alt_83": "גינה אנכית בחולון",
-      "gallery_alt_84": "מרפסת משפחתית בפתח תקווה",
-      "gallery_alt_85": "עיצוב מינימליסטי בכפר סבא",
-      "gallery_alt_86": "Image",
+      "home_page_title": "הפכו את המרפסת שלכם לגן עירוני — Urban Balcony",
+      "privacy_link_22": "Ketem200@gmail.com",
+      "privacy_link_23": "מדיניות פרטיות",
+      "privacy_link_24": "נגישות",
+      "privacy_link_25": "תנאי שימוש",
+      "privacy_link_26": "Zappy",
+      "services_alt_40": "Urban Balcony",
+      "services_alt_41": "תכנון מפורט של עיצוב מרפסת עירונית",
+      "services_alt_42": "מגוון צמחים מתאימים לגינון עירוני",
+      "services_alt_43": "מערכת השקיה חכמה אוטומטית למרפסת",
+      "services_alt_44": "תחזוקה מקצועית של גינת מרפסת עירונית",
+      "services_alt_45": "מרפסת אקולוגית עם פתרונות גינון קיימים",
+      "services_alt_46": "גינת גג יוקרתית עם עיצוב נוף מתוחכם",
+      "services_nav_36": "שירותים",
+      "services_nav_37": "אודות",
+      "services_nav_38": "גלריה",
+      "services_nav_39": "צור קשר",
+      "about_page_title": "הסיפור שלנו — Urban Balcony",
+      "services_link_30": "Zappy",
+      "services_link_31": "קבלו הצעת מחיר",
+      "services_link_32": "מדיניות פרטיות",
+      "services_link_33": "נגישות",
+      "services_link_34": "תנאי שימוש",
+      "services_link_35": "Zappy",
+      "terms_page_title": "תנאי שימוש",
+      "accessibility_p_9": "Urban Balcony מחויבת להנגיש את השירותים לכלל הציבור. אנו פועלים ליישם את הנחיות התקן הישראלי \n            (ת\"י 5568) המבוסס על הנחיות WCAG 2.1 ברמת AA.",
+      "accessibility_h1_1": "הצהרת נגישות",
+      "accessibility_h2_2": "1. מדיניות הנגישות",
+      "accessibility_h2_3": "2. הסדרי הנגישות באתר",
+      "accessibility_h2_4": "3. טכנולוגיות מסייעות נתמכות",
+      "accessibility_h2_5": "4. בדיקות נגישות",
+      "accessibility_h2_6": "5. שיפורים מתמשכים",
+      "accessibility_h2_7": "6. יצירת קשר ומשוב",
+      "accessibility_h3_8": "תאימות לתקן WCAG 2.1",
+      "accessibility_p_10": "אנו מאמינים בשוויון זכויות ובזכותו של כל אדם לקבל מידע ושירותים בצורה עצמאית ושוויונית. \n            אתר זה תוכנן ונבנה תוך מתן דגש מיוחד על נגישות לאנשים עם מוגבלויות.",
+      "accessibility_p_11": "האתר תואם לרמת AA של תקן WCAG 2.1, הכולל:",
+      "accessibility_p_12": "האתר נבדק באמצעות:",
+      "accessibility_p_13": "אנו עובדים באופן מתמשך לשיפור נגישות האתר ומעדכנים אותו בהתאם להתפתחויות טכנולוגיות ולמשוב מהמשתמשים.",
+      "accessibility_p_14": "אם נתקלתם בבעיית נגישות באתר או זקוקים לסיוע, אנא פנו אלינו:",
+      "accessibility_p_15": "זמני מענה: נענה לפניות בנושא נגישות תוך 3 ימי עסקים ונפעל לפתרון תוך 10 ימי עסקים.",
+      "accessibility_p_16": "תלונות: ניתן להגיש תלונה למשרד המשפטים - הנציבות לשוויון זכויות לאנשים עם מוגבלות",
+      "accessibility_p_17": "© 2025 Urban Balcony. כל הזכויות שמורות.",
+      "accessibility_p_18": "נוצר באמצעות&nbsp;Zappy",
+      "contact_page_title": "צרו קשר איתנו — Urban Balcony",
+      "gallery_page_title": "גלריית פרויקטים - Urban Balcony",
+      "privacy_page_title": "מדיניות פרטיות",
+      "accessibility_li_24": "תמיכה בניווט באמצעות מקלדת",
+      "accessibility_li_25": "תמיכה בקוראי מסך",
+      "accessibility_li_26": "ניגודיות צבעים מתאימה",
+      "accessibility_li_27": "גדלי פונט גמישים וניתנים להגדלה",
+      "accessibility_li_28": "תיאורי תמונות (Alt text) מפורטים",
+      "accessibility_li_29": "כותרות מובנות היררכית",
+      "accessibility_li_30": "קישורים תיאוריים וברורים",
+      "accessibility_li_31": "תמיכה בזום עד 200% ללא אובדן תוכן",
+      "accessibility_li_32": "נתפס (Perceivable): המידע מוצג בדרכים שמשתמשים יכולים לתפוס",
+      "accessibility_li_33": "פעיל (Operable): רכיבי הממשק ניתנים להפעלה",
+      "accessibility_li_34": "מובן (Understandable): המידע וממשק המשתמש מובנים",
+      "accessibility_li_35": "חזק (Robust): התוכן יכול להיות מפוענח על ידי מגוון טכנולוגיות",
+      "accessibility_li_36": "NVDA (Windows)",
+      "accessibility_li_37": "JAWS (Windows)",
+      "accessibility_li_38": "VoiceOver (Mac/iOS)",
+      "accessibility_li_39": "TalkBack (Android)",
+      "accessibility_li_40": "Dragon NaturallySpeaking",
+      "accessibility_li_41": "Switch navigation",
+      "accessibility_li_42": "כלים אוטומטיים לבדיקת נגישות",
+      "accessibility_li_43": "בדיקות ידניות עם קוראי מסך",
+      "accessibility_li_44": "ניווט באמצעות מקלדת בלבד",
+      "accessibility_li_45": "בדיקת ניגודיות צבעים",
+      "accessibility_li_46": "בדיקה עם משתמשים עם מוגבלויות",
+      "accessibility_li_47": "חברה: Urban Balcony",
+      "accessibility_li_48": "אימייל: Ketem200@gmail.com",
+      "accessibility_li_49": "טלפון: 050-7333256",
+      "services_page_title": "שירותי urban jungle balcony מקצועיים — Urban Balcony",
+      "accessibility_alt_54": "Urban Balcony",
+      "accessibility_nav_50": "שירותים",
+      "accessibility_nav_51": "אודות",
+      "accessibility_nav_52": "גלריה",
+      "accessibility_nav_53": "צור קשר",
+      "accessibility_link_19": "Ketem200@gmail.com",
+      "accessibility_link_20": "מדיניות פרטיות",
+      "accessibility_link_21": "נגישות",
+      "accessibility_link_22": "תנאי שימוש",
+      "accessibility_link_23": "Zappy",
+      "home_meta_description": "גלו את השירות המקצועי של Urban Balcony לעיצוב מרפסות עירוניות. התייעצות חינם עכשיו!",
+      "about_meta_description": "הכירו את הצוות המקצועי של Urban Balcony - מומחים בגינון עירוני ועיצוב נוף למרפסות וגגות.",
+      "terms_meta_description": "תנאי השימוש באתר - הזכויות והחובות של המשתמשים",
+      "accessibility_page_title": "הצהרת נגישות",
+      "contact_meta_description": "צרו קשר עם Urban Balcony לקבלת ייעוץ חינם והצעת מחיר. נשמח לעזור לכם ליצור את המרפסת הירוקה שלכם!",
       "gallery_meta_description": "גלריית פרויקטים של Urban Balcony - צפו בעבודות הגינון והעיצוב שלנו, מרפסות עירוניות וגגות שהפכנו לגנים ירוקים מרהיבים",
-      "gallery_page_title": "גלריית פרויקטים - Urban Balcony"
+      "privacy_meta_description": "מדיניות הפרטיות שלנו - כיצד אנו אוספים, משתמשים ומגנים על המידע שלכם",
+      "services_meta_description": "שירותי urban jungle balcony מקצועיים המותאמים לצרכים שלכם. תכנון, עיצוב, ותחזוקה של מרפסות עירוניות.",
+      "accessibility_meta_description": "הצהרת הנגישות שלנו - מחויבותנו לנגישות דיגיטלית"
     }
   },
   "fr": {
@@ -1013,11 +996,6 @@
       "home_h3_7": "Experts en aménagement paysager et jardinage pour balcons et toits urbains - créant une expérience urban jungle balcony unique",
       "home_h3_8": "Conception et aménagement de balcons",
       "home_h3_9": "Sélection de plantes adaptées",
-      "home_h3_10": "Systèmes d'irrigation intelligents",
-      "home_h3_11": "Expertise en jardinage urbain",
-      "home_h3_12": "Solutions écologiques",
-      "home_h3_13": "Design personnalisé",
-      "home_h3_14": "Entretien professionnel",
       "home_p_15": "Happily created by&nbsp;Zappy",
       "home_p_16": "Nous nous spécialisons dans la transformation de petits balcons urbains et toits en espaces verts et apaisants. Avec de nombreuses années d'expérience dans le jardinage urbain et l'aménagement paysager, nous créons des solutions personnalisées qui apportent la nature dans votre foyer urbain. Que vous soyez propriétaire cherchant à améliorer votre espace de vie, jeune famille souhaitant créer un environnement vert et éducatif pour les enfants, ou résidents d'appartements de luxe recherchant une expérience de vie parfaite - nous sommes là pour réaliser votre vision.",
       "home_p_17": "Nos services incluent une planification complète, la sélection de plantes adaptées aux conditions climatiques urbaines, des systèmes d'irrigation intelligents, et un entretien régulier. Nous croyons que chaque balcon, même le plus petit, peut devenir un refuge vert qui améliore la qualité de vie et nous reconnecte à la nature.",
@@ -1037,6 +1015,153 @@
       "home_p_31": "Contactez-nous dès aujourd'hui pour obtenir des conseils gratuits et un devis personnalisé. Transformons ensemble votre balcon en espace vert et relaxant !",
       "home_p_32": "© 2025 Urban Balcony. Tous droits réservés.",
       "home_p_33": "Créé avec&nbsp;Zappy",
+      "about_h1_1": "Notre histoire",
+      "about_h2_2": "Comment tout a commencé",
+      "about_h2_3": "Les valeurs qui nous guident",
+      "about_h2_4": "Notre mission",
+      "about_h2_5": "Notre équipe professionnelle",
+      "about_h2_6": "Vous souhaitez rejoindre notre famille de clients ?",
+      "about_h3_7": "Experts dans la transformation de balcons urbains en espaces verts et apaisants",
+      "about_h3_8": "Engagement envers le client",
+      "about_h3_9": "Responsabilité environnementale",
+      "about_p_12": "Happily created by&nbsp;Zappy",
+      "about_p_13": "Urban Balcony est né d'un amour profond pour la nature et d'une passion pour le design. Notre histoire a commencé il y a plusieurs années, lorsque nous avons découvert combien il était difficile de trouver des solutions de qualité et centrées sur le client pour l'aménagement de balcons urbains. De nombreux propriétaires d'appartements en ville rêvaient d'un espace vert privé, mais ne savaient pas comment commencer ou quelles plantes conviendraient aux conditions uniques de l'environnement urbain.",
+      "about_p_14": "Nous avons décidé de créer une entreprise spécialisée exactement dans ce domaine - transformer les balcons et toits urbains en espaces verts et accueillants. Nous avons commencé avec quelques petits projets, et grâce à notre engagement envers la qualité, le service personnalisé et des résultats impressionnants, notre réputation a rapidement grandi. Aujourd'hui, nous sommes fiers d'être l'un des fournisseurs leaders de services de jardinage urbain et d'aménagement paysager pour balcons dans la région.",
+      "about_p_15": "Notre philosophie est simple : chaque balcon, même le plus petit, peut devenir un refuge vert qui améliore la qualité de vie, nous connecte à la nature, et offre un espace apaisant et inspirant. Nous croyons que le jardinage urbain ne concerne pas seulement de belles plantes, mais aussi la création d'un environnement sain, durable et accueillant qui reflète la personnalité et le style de chaque client.",
+      "about_p_16": "Nous croyons que chaque client est unique et mérite un service personnalisé et adapté. Nous écoutons les besoins, comprenons la vision, et travaillons en toute transparence pour réaliser le balcon parfait pour vous.",
+      "about_p_17": "Nous nous soucions de l'environnement et utilisons des méthodes de jardinage écologiques et durables. Le choix de plantes locales, l'économie d'eau, et l'utilisation d'engrais biologiques font partie intégrante de notre travail.",
+      "about_p_18": "Notre équipe est composée d'experts expérimentés dans les domaines du jardinage, de l'aménagement paysager et de l'irrigation. Nous utilisons les matériaux de la plus haute qualité et veillons à une exécution parfaite dans chaque projet.",
+      "about_p_19": "Nous recherchons toujours des solutions innovantes et créatives pour maximiser le potentiel de chaque balcon. Des technologies d'irrigation intelligentes aux designs uniques - nous n'avons pas peur de penser en dehors des sentiers battus.",
+      "about_p_20": "La mission d'Urban Balcony est de rendre l'environnement urbain plus vert et plus sain, un balcon à la fois. Nous croyons que le jardinage urbain n'est pas seulement une tendance, mais un besoin vital dans le monde moderne. Nos balcons et toits sont l'endroit parfait pour ramener la nature dans la maison urbaine, améliorer la qualité de l'air, et fournir un espace apaisant et inspirant.",
+      "about_p_21": "Nous aspirons à être les leaders dans le domaine du jardinage urbain en Israël, et à continuer d'innover et d'améliorer nos services pour répondre aux besoins changeants de nos clients. Nous voulons que chaque personne vivant en ville puisse profiter de l'expérience the urban balcony - un espace vert privé qui nous connecte à la nature et améliore la qualité de vie.",
+      "about_p_22": "De plus, nous nous engageons dans l'éducation et la sensibilisation à l'importance du jardinage urbain et de la durabilité environnementale. Nous partageons nos connaissances et notre expérience avec les clients, organisons des ateliers et des journées d'étude, et soutenons des projets communautaires qui promeuvent le vert urbain.",
+      "about_p_23": "L'équipe d'Urban Balcony est composée d'experts expérimentés dans les domaines du jardinage, de l'aménagement paysager, de l'irrigation et de la maintenance. Chaque membre de l'équipe apporte avec lui des connaissances approfondies, des années d'expérience et une véritable passion pour le travail. Nous travaillons comme une équipe soudée et engagée, et maintenons une communication ouverte et transparente avec nos clients.",
+      "about_p_24": "Notre équipe comprend des paysagistes diplômés, des jardiniers certifiés, des techniciens en irrigation professionnels, et du personnel de service dévoué. Chacun d'entre nous apporte son expertise unique, et ensemble nous créons des solutions complètes et de qualité qui répondent aux standards les plus élevés.",
+      "about_p_25": "Nous sommes fiers de notre équipe et de son engagement envers l'excellence, le service personnalisé et la satisfaction client. Chaque projet est une opportunité pour nous de prouver notre professionnalisme et notre dévouement, et de créer un balcon qui offrira des années de plaisir et de satisfaction.",
+      "about_p_26": "Nous serions ravis de vous aider à réaliser votre vision de balcon vert. Contactez-nous dès aujourd'hui pour obtenir des conseils gratuits et commencer le voyage passionnant de créer votre propre urban jungle balcony !",
+      "about_p_27": "© 2025 Urban Balcony. Tous droits réservés.",
+      "about_p_28": "Créé avec&nbsp;Zappy",
+      "home_h3_10": "Systèmes d'irrigation intelligents",
+      "home_h3_11": "Expertise en jardinage urbain",
+      "home_h3_12": "Solutions écologiques",
+      "home_h3_13": "Design personnalisé",
+      "home_h3_14": "Entretien professionnel",
+      "terms_h1_1": "Conditions d'utilisation",
+      "terms_h2_2": "1. Définitions",
+      "terms_h2_3": "2. Description des services",
+      "terms_h2_4": "3. Conditions d'utilisation",
+      "terms_h2_5": "4. Obligations de l'utilisateur",
+      "terms_h2_6": "5. Politique de paiements et remboursements",
+      "terms_h2_7": "6. Limitation de responsabilité",
+      "terms_h2_8": "7. Droits d'auteur et propriété intellectuelle",
+      "terms_h2_9": "8. Confidentialité",
+      "terms_p_15": "Urban Balcony fournit du jardinage urbain et de l'aménagement paysager via le site web. Les services sont soumis aux conditions détaillées dans ce document et peuvent être modifiés de temps à autre.",
+      "terms_p_16": "L'utilisation du site est conditionnée au respect des conditions suivantes :",
+      "terms_p_17": "Si les services incluent un paiement :",
+      "terms_p_18": "Les services sont fournis \"en l'état\" sans garantie d'aucune sorte. La société ne sera pas responsable des dommages indirects, consécutifs ou spéciaux résultant de l'utilisation du site, sauf dans les cas où la loi en dispose autrement.",
+      "terms_p_19": "Tout le contenu du site, y compris les textes, images, design et code, est protégé par des droits d'auteur appartenant à Urban Balcony. Il est interdit de reproduire, distribuer ou faire un usage commercial du contenu sans autorisation écrite.",
+      "terms_p_20": "La collecte et l'utilisation d'informations personnelles sont soumises à notre politique de confidentialité. L'utilisation du site constitue un accord à la politique de confidentialité telle que détaillée séparément.",
+      "terms_p_21": "La société se réserve le droit de modifier ces conditions d'utilisation à tout moment. Les modifications substantielles seront publiées sur le site avec un préavis de 30 jours. La poursuite de l'utilisation après la modification constitue un accord aux nouvelles conditions.",
+      "terms_p_22": "La société se réserve le droit d'interrompre ou de limiter le service à tout moment, y compris en cas de violation des conditions d'utilisation. En cas de fin du service, les dispositions des sections pertinentes seront maintenues.",
+      "terms_p_23": "Ces conditions d'utilisation sont soumises aux lois de l'État d'Israël. Tout litige sera traité devant les tribunaux compétents en Israël, en donnant la priorité à l'arbitrage ou à la médiation dans la mesure du possible.",
+      "terms_p_24": "Pour toute question ou clarification concernant les conditions d'utilisation :",
+      "terms_p_25": "© 2025 Urban Balcony. Tous droits réservés.",
+      "terms_p_26": "Créé avec&nbsp;Zappy",
+      "about_h3_10": "Professionnalisme et qualité",
+      "about_h3_11": "Créativité et innovation",
+      "home_alt_46": "Urban Balcony",
+      "home_alt_47": "Balcon urbain aménagé avec jardin vert plein de plantes",
+      "home_alt_48": "Conception et aménagement professionnel de balcon urbain",
+      "home_alt_49": "Variété de plantes et fleurs pour balcon urbain",
+      "home_alt_50": "Système d'irrigation automatique intelligent pour balcon",
+      "home_alt_51": "Famille profitant de leur balcon vert",
+      "home_nav_42": "Services",
+      "home_nav_43": "À propos",
+      "home_nav_44": "Galerie",
+      "home_nav_45": "Contact",
+      "terms_h2_10": "9. Modification des conditions d'utilisation",
+      "terms_h2_11": "10. Fin du service",
+      "terms_h2_12": "11. Droit applicable et résolution des litiges",
+      "terms_h2_13": "12. Dispositions générales",
+      "terms_h2_14": "13. Coordonnées de contact",
+      "terms_li_32": "\"La société\" - Urban Balcony",
+      "terms_li_33": "\"L'utilisateur\" - toute personne qui navigue ou utilise le site",
+      "terms_li_34": "\"Les services\" - jardinage urbain et aménagement paysager fournis via le site",
+      "terms_li_35": "Utilisation du site à des fins légales uniquement",
+      "terms_li_36": "Non-interférence avec l'activité du site ou d'autres utilisateurs",
+      "terms_li_37": "Non-téléchargement de contenu offensant, illégal ou nuisible",
+      "terms_li_38": "Respect des droits d'auteur et de la propriété intellectuelle",
+      "terms_li_39": "Non-exécution d'actions susceptibles de nuire à la sécurité du site",
+      "terms_li_40": "Fourniture d'informations correctes et précises lors de l'inscription ou de la commande",
+      "terms_li_41": "Maintien de la confidentialité des détails d'accès au compte",
+      "terms_li_42": "Notification immédiate de toute utilisation non autorisée du compte",
+      "terms_li_43": "Mise à jour des informations personnelles si nécessaire",
+      "terms_li_44": "Les paiements sont effectués via des systèmes sécurisés et cryptés",
+      "terms_li_45": "Les prix incluent la TVA comme requis par la loi",
+      "terms_li_46": "Le droit d'annulation de transaction s'appliquera conformément à la loi de protection du consommateur",
+      "terms_li_47": "Les remboursements seront effectués dans les 14 jours ouvrables suivant l'approbation de l'annulation",
+      "terms_li_48": "Si une partie des conditions est déclarée invalide, les autres conditions resteront en vigueur",
+      "terms_li_49": "Le non-exercice d'un droit ne sera pas considéré comme une renonciation à celui-ci",
+      "terms_li_50": "Les conditions d'utilisation constituent l'intégralité de l'accord entre les parties",
+      "terms_li_51": "Entreprise : Urban Balcony",
+      "terms_li_52": "Email : Ketem200@gmail.com",
+      "terms_li_53": "Téléphone : 050-7333256",
+      "terms_li_54": "Adresse : adresse de l'entreprise, Israël",
+      "about_alt_39": "Urban Balcony",
+      "about_nav_35": "Services",
+      "about_nav_36": "À propos",
+      "about_nav_37": "Galerie",
+      "about_nav_38": "Contact",
+      "contact_h1_1": "Nos projets",
+      "contact_h3_2": "Galerie de travaux de jardinage et d'aménagement de balcons urbains",
+      "contact_h3_3": "Balcon urbain moderne",
+      "contact_h3_4": "Rénovation de jardin sur toit",
+      "contact_h3_5": "Jungle urbaine sur petit balcon",
+      "contact_h3_6": "Système d'irrigation intelligent",
+      "contact_h3_7": "Jardin d'herbes aromatiques urbain",
+      "contact_h3_8": "Balcon de penthouse de luxe",
+      "contact_h3_9": "Jardin vertical",
+      "contact_p_15": "Happily created by&nbsp;Zappy",
+      "contact_p_16": "Aménagement de balcon avec végétation luxuriante et coin salon agréable",
+      "contact_p_17": "Transformation d'un toit en jardin urbain avec variété de plantes et fleurs",
+      "contact_p_18": "Optimisation maximale d'un petit espace pour créer un coin vert impressionnant",
+      "contact_p_19": "Installation d'un système d'arrosage automatique pour jardin de balcon",
+      "contact_p_20": "Balcon avec jardin d'herbes aromatiques fraîches pour usage quotidien",
+      "contact_p_21": "Aménagement paysager complet pour balcon penthouse avec végétation variée",
+      "contact_p_22": "Installation d'un jardin vertical sur le mur du balcon pour optimiser l'espace",
+      "contact_p_23": "Aménagement de balcon avec variété de succulentes et cactus",
+      "contact_p_24": "Aménagement de balcon familial avec aire de jeux et végétation",
+      "contact_p_25": "Balcon de style méditerranéen avec plantes aromatiques et fleurs",
+      "contact_p_26": "Balcon de style zen avec végétation minimaliste et apaisante",
+      "contact_p_27": "Transformation d'un balcon ordinaire en jardin fleuri coloré et éblouissant",
+      "contact_p_28": "© 2025 Urban Balcony. Tous droits réservés.",
+      "contact_p_29": "Créé avec&nbsp;Zappy",
+      "gallery_h1_1": "Galerie de nos projets",
+      "gallery_h2_2": "Notre processus",
+      "gallery_h3_3": "Jardin de toit luxueux - Tel Aviv",
+      "gallery_h3_4": "Jardin de toit luxueux - Tel Aviv",
+      "gallery_h3_5": "Petit balcon - Ramat Gan",
+      "gallery_h3_6": "Petit balcon - Ramat Gan",
+      "gallery_h3_7": "Balcon moderne - Herzliya",
+      "gallery_h3_8": "Balcon moderne - Herzliya",
+      "gallery_h3_9": "Jardin de penthouse - Netanya",
+      "gallery_p_24": "Découvrez les balcons et toits urbains que nous avons transformés en jardins verts spectaculaires",
+      "gallery_p_25": "Chaque projet commence par une vision et se termine par un espace vert et apaisant qui transforme le quotidien. Notre galerie présente une large gamme de projets de jardinage urbain - des petits balcons d'appartements urbains aux toits luxueux. Chaque projet est soigneusement planifié en tenant compte des conditions climatiques, de l'exposition au soleil et du niveau d'entretien souhaité.",
+      "gallery_p_26": "Toit de 120 m² transformé en jardin urbain spectaculaire avec coins salon, végétation riche et système d'irrigation automatique",
+      "gallery_p_27": "Balcon de 8 m² transformé en coin jardin intime avec plantes aromatiques, fleurs saisonnières et coin salon agréable",
+      "gallery_p_28": "Design moderne et minimaliste avec végétation tropicale, éclairage d'ambiance et terrasse en bois de qualité",
+      "gallery_p_29": "Penthouse spectaculaire avec jardin de 200 m², incluant arbres fruitiers, légumes biologiques et coin barbecue",
+      "gallery_p_30": "Solution parfaite pour balcon ombragé avec plantes d'ombre, jardin vertical et coin café agréable",
+      "gallery_p_31": "Toit avec exposition pleine au soleil, plantes résistantes, système d'irrigation intelligent et pergola design",
+      "gallery_p_32": "Solution intelligente pour petit balcon avec jardin vertical spectaculaire, plantes ornementales et herbes aromatiques en abondance",
+      "gallery_p_33": "Balcon design pour toute la famille avec aire de jeux verte, légumes pour culture domestique et coin salon spacieux",
+      "gallery_p_34": "Approche minimaliste avec végétation sélectionnée, pots design et palette de couleurs épurée",
+      "gallery_p_35": "Voici comment nous transformons votre balcon en jardin urbain spectaculaire",
+      "gallery_p_36": "Nous nous rencontrons sur votre balcon, comprenons vos besoins et votre vision, et effectuons des mesures précises",
+      "gallery_p_37": "Nous préparons pour vous un plan détaillé avec des recommandations de plantes, matériaux et solutions de design",
+      "gallery_p_38": "Notre équipe professionnelle exécutera le travail avec soin et professionnalisme",
+      "gallery_p_39": "© 2025 Urban Balcony. Tous droits réservés.",
+      "gallery_p_40": "Créé avec&nbsp;Zappy",
       "home_link_34": "Zappy",
       "home_link_35": "Obtenez des conseils gratuits",
       "home_link_36": "Tous nos services",
@@ -1045,18 +1170,77 @@
       "home_link_39": "Accessibilité",
       "home_link_40": "Conditions d'utilisation",
       "home_link_41": "Zappy",
-      "home_nav_42": "Services",
-      "home_nav_43": "À propos",
-      "home_nav_44": "Galerie",
-      "home_nav_45": "Contact",
-      "home_alt_46": "Urban Balcony",
-      "home_alt_47": "Balcon urbain aménagé avec jardin vert plein de plantes",
-      "home_alt_48": "Conception et aménagement professionnel de balcon urbain",
-      "home_alt_49": "Variété de plantes et fleurs pour balcon urbain",
-      "home_alt_50": "Système d'irrigation automatique intelligent pour balcon",
-      "home_alt_51": "Famille profitant de leur balcon vert",
-      "home_meta_description": "Découvrez le service professionnel d'Urban Balcony pour l'aménagement de balcons urbains. Consultation gratuite maintenant !",
-      "home_page_title": "Transformez votre balcon en jardin urbain — Urban Balcony",
+      "privacy_h1_1": "Politique de confidentialité",
+      "privacy_h2_2": "1. Collecte d'informations",
+      "privacy_h2_3": "2. Utilisation des informations",
+      "privacy_h2_4": "3. Partage d'informations",
+      "privacy_h2_5": "4. Droits de l'utilisateur",
+      "privacy_h2_6": "5. Cookies",
+      "privacy_h2_7": "6. Sécurité des données",
+      "privacy_h2_8": "7. Modifications de la politique",
+      "privacy_h2_9": "8. Contact",
+      "privacy_p_10": "Urban Balcony (\"l'Entreprise\", \"nous\", \"notre\") s'engage à protéger votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations lors de l'utilisation du site www.company.com (\"le Service\").",
+      "privacy_p_11": "Nous pouvons collecter les types d'informations suivants :",
+      "privacy_p_12": "Nous utilisons les informations collectées aux fins suivantes :",
+      "privacy_p_13": "Nous ne vendrons, ne louerons ni ne partagerons vos informations personnelles avec des tiers, sauf dans les cas suivants :",
+      "privacy_p_14": "Conformément à la loi sur la protection de la vie privée de 1981, vous disposez des droits suivants :",
+      "privacy_p_15": "Notre site utilise des cookies pour améliorer l'expérience utilisateur. Vous pouvez gérer les cookies via les paramètres de votre navigateur. La désactivation des cookies peut affecter la fonctionnalité du site.",
+      "privacy_p_16": "Nous prenons des mesures de sécurité raisonnables pour protéger vos informations, notamment le chiffrement, les pare-feu et le contrôle d'accès restreint. Cependant, aucune méthode de transmission ou de stockage n'est sécurisée à 100%.",
+      "privacy_p_17": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Les modifications importantes seront publiées sur le site avec un préavis de 30 jours.",
+      "privacy_p_18": "Pour toute question ou demande concernant cette politique de confidentialité, vous pouvez nous contacter :",
+      "privacy_p_19": "Registre des bases de données : pour les plaintes, vous pouvez contacter le registre des bases de données du ministère de la Justice",
+      "privacy_p_20": "© 2025 Urban Balcony. Tous droits réservés.",
+      "privacy_p_21": "Créé avec&nbsp;Zappy",
+      "terms_alt_59": "Urban Balcony",
+      "terms_nav_55": "Services",
+      "terms_nav_56": "À propos",
+      "terms_nav_57": "Galerie",
+      "terms_nav_58": "Contact",
+      "about_link_29": "Zappy",
+      "about_link_30": "Contactez-nous",
+      "about_link_31": "Politique de confidentialité",
+      "about_link_32": "Accessibilité",
+      "about_link_33": "Conditions d'utilisation",
+      "about_link_34": "Zappy",
+      "contact_h3_10": "Jardin de succulentes",
+      "contact_h3_11": "Balcon familial",
+      "contact_h3_12": "Style méditerranéen",
+      "contact_h3_13": "Design zen minimaliste",
+      "contact_h3_14": "Balcon fleuri coloré",
+      "gallery_h3_10": "Jardin de penthouse - Netanya",
+      "gallery_h3_11": "Balcon ombragé - Givatayim",
+      "gallery_h3_12": "Balcon ombragé - Givatayim",
+      "gallery_h3_13": "Toit ensoleillé - Rishon LeZion",
+      "gallery_h3_14": "Toit ensoleillé - Rishon LeZion",
+      "gallery_h3_15": "Jardin vertical - Holon",
+      "gallery_h3_16": "Jardin vertical - Holon",
+      "gallery_h3_17": "Balcon familial - Petah Tikva",
+      "gallery_h3_18": "Balcon familial - Petah Tikva",
+      "gallery_h3_19": "Design minimaliste - Kfar Saba",
+      "gallery_h3_20": "Design minimaliste - Kfar Saba",
+      "gallery_h3_21": "Consultation conseil",
+      "gallery_h3_22": "Planification et design",
+      "gallery_h3_23": "Réalisation professionnelle",
+      "privacy_li_27": "Informations personnelles : nom, adresse e-mail, numéro de téléphone et adresse",
+      "privacy_li_28": "Informations techniques : adresse IP, type de navigateur, système d'exploitation et données d'utilisation du site",
+      "privacy_li_29": "Cookies : informations stockées sur votre ordinateur pour améliorer l'expérience utilisateur",
+      "privacy_li_30": "Fournir les services demandés",
+      "privacy_li_31": "Améliorer le service et l'expérience utilisateur",
+      "privacy_li_32": "Vous contacter concernant nos services",
+      "privacy_li_33": "Respecter les exigences légales",
+      "privacy_li_34": "Avec votre consentement explicite",
+      "privacy_li_35": "Lorsque requis par la loi",
+      "privacy_li_36": "Pour protéger nos droits ou la sécurité de nos utilisateurs",
+      "privacy_li_37": "Avec des prestataires de services qui aident à exploiter le service (sous accords de confidentialité)",
+      "privacy_li_38": "Droit d'accès aux informations personnelles vous concernant",
+      "privacy_li_39": "Droit de rectification d'informations erronées ou inexactes",
+      "privacy_li_40": "Droit à l'effacement d'informations personnelles dans certaines circonstances",
+      "privacy_li_41": "Droit de s'opposer au traitement d'informations à des fins de marketing",
+      "privacy_li_42": "Droit de déposer une plainte auprès du registre des bases de données",
+      "privacy_li_43": "Entreprise : Urban Balcony",
+      "privacy_li_44": "E-mail : Ketem200@gmail.com",
+      "privacy_li_45": "Téléphone : 050-7333256",
+      "privacy_li_46": "Adresse : adresse de l'entreprise, Israël",
       "services_h1_1": "Nos services professionnels",
       "services_h2_2": "Conception et aménagement de balcons urbains",
       "services_h2_3": "Sélection et installation de plantes",
@@ -1086,104 +1270,11 @@
       "services_p_27": "Contactez-nous dès aujourd'hui pour obtenir des conseils professionnels et un devis personnalisé. Nous serons ravis de vous aider à réaliser votre vision de balcon vert !",
       "services_p_28": "© 2025 Urban Balcony. Tous droits réservés.",
       "services_p_29": "Créé avec&nbsp;Zappy",
-      "services_link_30": "Zappy",
-      "services_link_31": "Obtenez un devis",
-      "services_link_32": "Politique de confidentialité",
-      "services_link_33": "Accessibilité",
-      "services_link_34": "Conditions d'utilisation",
-      "services_link_35": "Zappy",
-      "services_nav_36": "Services",
-      "services_nav_37": "À propos",
-      "services_nav_38": "Galerie",
-      "services_nav_39": "Contact",
-      "services_alt_40": "Urban Balcony",
-      "services_alt_41": "Planification détaillée d'aménagement de balcon urbain",
-      "services_alt_42": "Variété de plantes adaptées au jardinage urbain",
-      "services_alt_43": "Système d'arrosage intelligent automatique pour balcon",
-      "services_alt_44": "Entretien professionnel de jardin de balcon urbain",
-      "services_alt_45": "Balcon écologique avec solutions de jardinage durables",
-      "services_alt_46": "Jardin de toit luxueux avec aménagement paysager sophistiqué",
-      "services_meta_description": "Services professionnels urban jungle balcony adaptés à vos besoins. Conception, aménagement et entretien de balcons urbains.",
-      "services_page_title": "Services professionnels urban jungle balcony — Urban Balcony",
-      "about_h1_1": "Notre histoire",
-      "about_h2_2": "Comment tout a commencé",
-      "about_h2_3": "Les valeurs qui nous guident",
-      "about_h2_4": "Notre mission",
-      "about_h2_5": "Notre équipe professionnelle",
-      "about_h2_6": "Vous souhaitez rejoindre notre famille de clients ?",
-      "about_h3_7": "Experts dans la transformation de balcons urbains en espaces verts et apaisants",
-      "about_h3_8": "Engagement envers le client",
-      "about_h3_9": "Responsabilité environnementale",
-      "about_h3_10": "Professionnalisme et qualité",
-      "about_h3_11": "Créativité et innovation",
-      "about_p_12": "Happily created by&nbsp;Zappy",
-      "about_p_13": "Urban Balcony est né d'un amour profond pour la nature et d'une passion pour le design. Notre histoire a commencé il y a plusieurs années, lorsque nous avons découvert combien il était difficile de trouver des solutions de qualité et centrées sur le client pour l'aménagement de balcons urbains. De nombreux propriétaires d'appartements en ville rêvaient d'un espace vert privé, mais ne savaient pas comment commencer ou quelles plantes conviendraient aux conditions uniques de l'environnement urbain.",
-      "about_p_14": "Nous avons décidé de créer une entreprise spécialisée exactement dans ce domaine - transformer les balcons et toits urbains en espaces verts et accueillants. Nous avons commencé avec quelques petits projets, et grâce à notre engagement envers la qualité, le service personnalisé et des résultats impressionnants, notre réputation a rapidement grandi. Aujourd'hui, nous sommes fiers d'être l'un des fournisseurs leaders de services de jardinage urbain et d'aménagement paysager pour balcons dans la région.",
-      "about_p_15": "Notre philosophie est simple : chaque balcon, même le plus petit, peut devenir un refuge vert qui améliore la qualité de vie, nous connecte à la nature, et offre un espace apaisant et inspirant. Nous croyons que le jardinage urbain ne concerne pas seulement de belles plantes, mais aussi la création d'un environnement sain, durable et accueillant qui reflète la personnalité et le style de chaque client.",
-      "about_p_16": "Nous croyons que chaque client est unique et mérite un service personnalisé et adapté. Nous écoutons les besoins, comprenons la vision, et travaillons en toute transparence pour réaliser le balcon parfait pour vous.",
-      "about_p_17": "Nous nous soucions de l'environnement et utilisons des méthodes de jardinage écologiques et durables. Le choix de plantes locales, l'économie d'eau, et l'utilisation d'engrais biologiques font partie intégrante de notre travail.",
-      "about_p_18": "Notre équipe est composée d'experts expérimentés dans les domaines du jardinage, de l'aménagement paysager et de l'irrigation. Nous utilisons les matériaux de la plus haute qualité et veillons à une exécution parfaite dans chaque projet.",
-      "about_p_19": "Nous recherchons toujours des solutions innovantes et créatives pour maximiser le potentiel de chaque balcon. Des technologies d'irrigation intelligentes aux designs uniques - nous n'avons pas peur de penser en dehors des sentiers battus.",
-      "about_p_20": "La mission d'Urban Balcony est de rendre l'environnement urbain plus vert et plus sain, un balcon à la fois. Nous croyons que le jardinage urbain n'est pas seulement une tendance, mais un besoin vital dans le monde moderne. Nos balcons et toits sont l'endroit parfait pour ramener la nature dans la maison urbaine, améliorer la qualité de l'air, et fournir un espace apaisant et inspirant.",
-      "about_p_21": "Nous aspirons à être les leaders dans le domaine du jardinage urbain en Israël, et à continuer d'innover et d'améliorer nos services pour répondre aux besoins changeants de nos clients. Nous voulons que chaque personne vivant en ville puisse profiter de l'expérience the urban balcony - un espace vert privé qui nous connecte à la nature et améliore la qualité de vie.",
-      "about_p_22": "De plus, nous nous engageons dans l'éducation et la sensibilisation à l'importance du jardinage urbain et de la durabilité environnementale. Nous partageons nos connaissances et notre expérience avec les clients, organisons des ateliers et des journées d'étude, et soutenons des projets communautaires qui promeuvent le vert urbain.",
-      "about_p_23": "L'équipe d'Urban Balcony est composée d'experts expérimentés dans les domaines du jardinage, de l'aménagement paysager, de l'irrigation et de la maintenance. Chaque membre de l'équipe apporte avec lui des connaissances approfondies, des années d'expérience et une véritable passion pour le travail. Nous travaillons comme une équipe soudée et engagée, et maintenons une communication ouverte et transparente avec nos clients.",
-      "about_p_24": "Notre équipe comprend des paysagistes diplômés, des jardiniers certifiés, des techniciens en irrigation professionnels, et du personnel de service dévoué. Chacun d'entre nous apporte son expertise unique, et ensemble nous créons des solutions complètes et de qualité qui répondent aux standards les plus élevés.",
-      "about_p_25": "Nous sommes fiers de notre équipe et de son engagement envers l'excellence, le service personnalisé et la satisfaction client. Chaque projet est une opportunité pour nous de prouver notre professionnalisme et notre dévouement, et de créer un balcon qui offrira des années de plaisir et de satisfaction.",
-      "about_p_26": "Nous serions ravis de vous aider à réaliser votre vision de balcon vert. Contactez-nous dès aujourd'hui pour obtenir des conseils gratuits et commencer le voyage passionnant de créer votre propre urban jungle balcony !",
-      "about_p_27": "© 2025 Urban Balcony. Tous droits réservés.",
-      "about_p_28": "Créé avec&nbsp;Zappy",
-      "about_link_29": "Zappy",
-      "about_link_30": "Contactez-nous",
-      "about_link_31": "Politique de confidentialité",
-      "about_link_32": "Accessibilité",
-      "about_link_33": "Conditions d'utilisation",
-      "about_link_34": "Zappy",
-      "about_nav_35": "Services",
-      "about_nav_36": "À propos",
-      "about_nav_37": "Galerie",
-      "about_nav_38": "Contact",
-      "about_alt_39": "Urban Balcony",
-      "about_meta_description": "Découvrez l'équipe professionnelle d'Urban Balcony - experts en jardinage urbain et aménagement paysager pour balcons et toits.",
-      "about_page_title": "Notre histoire — Urban Balcony",
-      "contact_h1_1": "Nos projets",
-      "contact_h3_2": "Galerie de travaux de jardinage et d'aménagement de balcons urbains",
-      "contact_h3_3": "Balcon urbain moderne",
-      "contact_h3_4": "Rénovation de jardin sur toit",
-      "contact_h3_5": "Jungle urbaine sur petit balcon",
-      "contact_h3_6": "Système d'irrigation intelligent",
-      "contact_h3_7": "Jardin d'herbes aromatiques urbain",
-      "contact_h3_8": "Balcon de penthouse de luxe",
-      "contact_h3_9": "Jardin vertical",
-      "contact_h3_10": "Jardin de succulentes",
-      "contact_h3_11": "Balcon familial",
-      "contact_h3_12": "Style méditerranéen",
-      "contact_h3_13": "Design zen minimaliste",
-      "contact_h3_14": "Balcon fleuri coloré",
-      "contact_p_15": "Happily created by&nbsp;Zappy",
-      "contact_p_16": "Aménagement de balcon avec végétation luxuriante et coin salon agréable",
-      "contact_p_17": "Transformation d'un toit en jardin urbain avec variété de plantes et fleurs",
-      "contact_p_18": "Optimisation maximale d'un petit espace pour créer un coin vert impressionnant",
-      "contact_p_19": "Installation d'un système d'arrosage automatique pour jardin de balcon",
-      "contact_p_20": "Balcon avec jardin d'herbes aromatiques fraîches pour usage quotidien",
-      "contact_p_21": "Aménagement paysager complet pour balcon penthouse avec végétation variée",
-      "contact_p_22": "Installation d'un jardin vertical sur le mur du balcon pour optimiser l'espace",
-      "contact_p_23": "Aménagement de balcon avec variété de succulentes et cactus",
-      "contact_p_24": "Aménagement de balcon familial avec aire de jeux et végétation",
-      "contact_p_25": "Balcon de style méditerranéen avec plantes aromatiques et fleurs",
-      "contact_p_26": "Balcon de style zen avec végétation minimaliste et apaisante",
-      "contact_p_27": "Transformation d'un balcon ordinaire en jardin fleuri coloré et éblouissant",
-      "contact_p_28": "© 2025 Urban Balcony. Tous droits réservés.",
-      "contact_p_29": "Créé avec&nbsp;Zappy",
-      "contact_link_30": "Zappy",
-      "contact_link_31": "Politique de confidentialité",
-      "contact_link_32": "Accessibilité",
-      "contact_link_33": "Conditions d'utilisation",
-      "contact_link_34": "Zappy",
-      "contact_nav_35": "Services",
-      "contact_nav_36": "À propos",
-      "contact_nav_37": "Galerie",
-      "contact_nav_38": "Contact",
+      "terms_link_27": "Ketem200@gmail.com",
+      "terms_link_28": "Politique de confidentialité",
+      "terms_link_29": "Accessibilité",
+      "terms_link_30": "Conditions d'utilisation",
+      "terms_link_31": "Zappy",
       "contact_alt_39": "Urban Balcony",
       "contact_alt_40": "Balcon urbain moderne avec plantes vertes et coin salon",
       "contact_alt_41": "Jardin de toit avec plantes variées",
@@ -1197,218 +1288,39 @@
       "contact_alt_49": "Balcon de style méditerranéen",
       "contact_alt_50": "Aménagement de balcon minimaliste zen",
       "contact_alt_51": "Rénovation de balcon avec fleurs colorées",
-      "contact_meta_description": "Contactez Urban Balcony pour un conseil gratuit et un devis. Nous serons ravis de vous aider à créer votre balcon vert !",
-      "contact_page_title": "Contactez-nous — Urban Balcony",
-      "privacy_h1_1": "Politique de confidentialité",
-      "privacy_h2_2": "1. Collecte d'informations",
-      "privacy_h2_3": "2. Utilisation des informations",
-      "privacy_h2_4": "3. Partage d'informations",
-      "privacy_h2_5": "4. Droits de l'utilisateur",
-      "privacy_h2_6": "5. Cookies",
-      "privacy_h2_7": "6. Sécurité des données",
-      "privacy_h2_8": "7. Modifications de la politique",
-      "privacy_h2_9": "8. Contact",
-      "privacy_p_10": "Urban Balcony (\"l'Entreprise\", \"nous\", \"notre\") s'engage à protéger votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations lors de l'utilisation du site www.company.com (\"le Service\").",
-      "privacy_p_11": "Nous pouvons collecter les types d'informations suivants :",
-      "privacy_p_12": "Nous utilisons les informations collectées aux fins suivantes :",
-      "privacy_p_13": "Nous ne vendrons, ne louerons ni ne partagerons vos informations personnelles avec des tiers, sauf dans les cas suivants :",
-      "privacy_p_14": "Conformément à la loi sur la protection de la vie privée de 1981, vous disposez des droits suivants :",
-      "privacy_p_15": "Notre site utilise des cookies pour améliorer l'expérience utilisateur. Vous pouvez gérer les cookies via les paramètres de votre navigateur. La désactivation des cookies peut affecter la fonctionnalité du site.",
-      "privacy_p_16": "Nous prenons des mesures de sécurité raisonnables pour protéger vos informations, notamment le chiffrement, les pare-feu et le contrôle d'accès restreint. Cependant, aucune méthode de transmission ou de stockage n'est sécurisée à 100%.",
-      "privacy_p_17": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Les modifications importantes seront publiées sur le site avec un préavis de 30 jours.",
-      "privacy_p_18": "Pour toute question ou demande concernant cette politique de confidentialité, vous pouvez nous contacter :",
-      "privacy_p_19": "Registre des bases de données : pour les plaintes, vous pouvez contacter le registre des bases de données du ministère de la Justice",
-      "privacy_p_20": "© 2025 Urban Balcony. Tous droits réservés.",
-      "privacy_p_21": "Créé avec&nbsp;Zappy",
-      "privacy_link_22": "Ketem200@gmail.com",
-      "privacy_link_23": "Politique de confidentialité",
-      "privacy_link_24": "Accessibilité",
-      "privacy_link_25": "Conditions d'utilisation",
-      "privacy_link_26": "Zappy",
-      "privacy_li_27": "Informations personnelles : nom, adresse e-mail, numéro de téléphone et adresse",
-      "privacy_li_28": "Informations techniques : adresse IP, type de navigateur, système d'exploitation et données d'utilisation du site",
-      "privacy_li_29": "Cookies : informations stockées sur votre ordinateur pour améliorer l'expérience utilisateur",
-      "privacy_li_30": "Fournir les services demandés",
-      "privacy_li_31": "Améliorer le service et l'expérience utilisateur",
-      "privacy_li_32": "Vous contacter concernant nos services",
-      "privacy_li_33": "Respecter les exigences légales",
-      "privacy_li_34": "Avec votre consentement explicite",
-      "privacy_li_35": "Lorsque requis par la loi",
-      "privacy_li_36": "Pour protéger nos droits ou la sécurité de nos utilisateurs",
-      "privacy_li_37": "Avec des prestataires de services qui aident à exploiter le service (sous accords de confidentialité)",
-      "privacy_li_38": "Droit d'accès aux informations personnelles vous concernant",
-      "privacy_li_39": "Droit de rectification d'informations erronées ou inexactes",
-      "privacy_li_40": "Droit à l'effacement d'informations personnelles dans certaines circonstances",
-      "privacy_li_41": "Droit de s'opposer au traitement d'informations à des fins de marketing",
-      "privacy_li_42": "Droit de déposer une plainte auprès du registre des bases de données",
-      "privacy_li_43": "Entreprise : Urban Balcony",
-      "privacy_li_44": "E-mail : Ketem200@gmail.com",
-      "privacy_li_45": "Téléphone : 050-7333256",
-      "privacy_li_46": "Adresse : adresse de l'entreprise, Israël",
+      "contact_nav_35": "Services",
+      "contact_nav_36": "À propos",
+      "contact_nav_37": "Galerie",
+      "contact_nav_38": "Contact",
+      "gallery_alt_76": "Urban Balcony",
+      "gallery_alt_77": "Jardin de toit luxueux à Tel Aviv",
+      "gallery_alt_78": "Petit balcon à Ramat Gan",
+      "gallery_alt_79": "Balcon moderne à Herzliya",
+      "gallery_alt_80": "Jardin de penthouse à Netanya",
+      "gallery_alt_81": "Balcon ombragé à Givatayim",
+      "gallery_alt_82": "Toit ensoleillé à Rishon LeZion",
+      "gallery_alt_83": "Jardin vertical à Holon",
+      "gallery_alt_84": "Balcon familial à Petah Tikva",
+      "gallery_alt_85": "Design minimaliste à Kfar Saba",
+      "gallery_alt_86": "Image",
+      "gallery_nav_72": "Services",
+      "gallery_nav_73": "À propos",
+      "gallery_nav_74": "Galerie",
+      "gallery_nav_75": "Contact",
+      "privacy_alt_51": "Urban Balcony",
       "privacy_nav_47": "Services",
       "privacy_nav_48": "À propos",
       "privacy_nav_49": "Galerie",
       "privacy_nav_50": "Contact",
-      "privacy_alt_51": "Urban Balcony",
-      "privacy_meta_description": "Notre politique de confidentialité - comment nous collectons, utilisons et protégeons vos informations",
-      "privacy_page_title": "Politique de confidentialité",
-      "accessibility_h1_1": "Déclaration d'accessibilité",
-      "accessibility_h2_2": "1. Politique d'accessibilité",
-      "accessibility_h2_3": "2. Dispositions d'accessibilité du site",
-      "accessibility_h2_4": "3. Technologies d'assistance prises en charge",
-      "accessibility_h2_5": "4. Tests d'accessibilité",
-      "accessibility_h2_6": "5. Améliorations continues",
-      "accessibility_h2_7": "6. Contact et retours",
-      "accessibility_h3_8": "Conformité à la norme WCAG 2.1",
-      "accessibility_p_9": "Urban Balcony s'engage à rendre ses services accessibles à l'ensemble du public. Nous œuvrons à mettre en œuvre les directives de la norme israélienne (TI 5568) basée sur les directives WCAG 2.1 niveau AA.",
-      "accessibility_p_10": "Nous croyons en l'égalité des droits et au droit de chaque personne à recevoir des informations et des services de manière indépendante et équitable. Ce site a été conçu et construit en mettant un accent particulier sur l'accessibilité pour les personnes en situation de handicap.",
-      "accessibility_p_11": "Le site est conforme au niveau AA de la norme WCAG 2.1, qui comprend :",
-      "accessibility_p_12": "Le site est testé au moyen de :",
-      "accessibility_p_13": "Nous travaillons en permanence à l'amélioration de l'accessibilité du site et le mettons à jour en fonction des développements technologiques et des retours des utilisateurs.",
-      "accessibility_p_14": "Si vous rencontrez un problème d'accessibilité sur le site ou avez besoin d'assistance, veuillez nous contacter :",
-      "accessibility_p_15": "Délais de réponse : Nous répondons aux demandes concernant l'accessibilité sous 3 jours ouvrables et agissons pour une résolution sous 10 jours ouvrables.",
-      "accessibility_p_16": "Réclamations : Il est possible de déposer une réclamation auprès du ministère de la Justice - Commissariat à l'égalité des droits pour les personnes en situation de handicap",
-      "accessibility_p_17": "© 2025 Urban Balcony. Tous droits réservés.",
-      "accessibility_p_18": "Créé avec&nbsp;Zappy",
-      "accessibility_link_19": "Ketem200@gmail.com",
-      "accessibility_link_20": "Politique de confidentialité",
-      "accessibility_link_21": "Accessibilité",
-      "accessibility_link_22": "Conditions d'utilisation",
-      "accessibility_link_23": "Zappy",
-      "accessibility_li_24": "Support de navigation au clavier",
-      "accessibility_li_25": "Support des lecteurs d'écran",
-      "accessibility_li_26": "Contraste de couleurs approprié",
-      "accessibility_li_27": "Tailles de police flexibles et agrandissables",
-      "accessibility_li_28": "Descriptions d'images (Alt text) détaillées",
-      "accessibility_li_29": "Titres structurés hiérarchiquement",
-      "accessibility_li_30": "Liens descriptifs et clairs",
-      "accessibility_li_31": "Support du zoom jusqu'à 200% sans perte de contenu",
-      "accessibility_li_32": "Perceptible : L'information est présentée de manières que les utilisateurs peuvent percevoir",
-      "accessibility_li_33": "Utilisable : Les composants de l'interface sont utilisables",
-      "accessibility_li_34": "Compréhensible : L'information et l'interface utilisateur sont compréhensibles",
-      "accessibility_li_35": "Robuste : Le contenu peut être interprété par une variété de technologies",
-      "accessibility_li_36": "NVDA (Windows)",
-      "accessibility_li_37": "JAWS (Windows)",
-      "accessibility_li_38": "VoiceOver (Mac/iOS)",
-      "accessibility_li_39": "TalkBack (Android)",
-      "accessibility_li_40": "Dragon NaturallySpeaking",
-      "accessibility_li_41": "Navigation par commutateur",
-      "accessibility_li_42": "Outils automatiques de test d'accessibilité",
-      "accessibility_li_43": "Tests manuels avec lecteurs d'écran",
-      "accessibility_li_44": "Navigation au clavier uniquement",
-      "accessibility_li_45": "Test de contraste des couleurs",
-      "accessibility_li_46": "Test avec des utilisateurs en situation de handicap",
-      "accessibility_li_47": "Entreprise : Urban Balcony",
-      "accessibility_li_48": "Email : Ketem200@gmail.com",
-      "accessibility_li_49": "Téléphone : 050-7333256",
-      "accessibility_nav_50": "Services",
-      "accessibility_nav_51": "À propos",
-      "accessibility_nav_52": "Galerie",
-      "accessibility_nav_53": "Nous contacter",
-      "accessibility_alt_54": "Urban Balcony",
-      "accessibility_meta_description": "Notre déclaration d'accessibilité - notre engagement pour l'accessibilité numérique",
-      "accessibility_page_title": "Déclaration d'accessibilité",
-      "terms_h1_1": "Conditions d'utilisation",
-      "terms_h2_2": "1. Définitions",
-      "terms_h2_3": "2. Description des services",
-      "terms_h2_4": "3. Conditions d'utilisation",
-      "terms_h2_5": "4. Obligations de l'utilisateur",
-      "terms_h2_6": "5. Politique de paiements et remboursements",
-      "terms_h2_7": "6. Limitation de responsabilité",
-      "terms_h2_8": "7. Droits d'auteur et propriété intellectuelle",
-      "terms_h2_9": "8. Confidentialité",
-      "terms_h2_10": "9. Modification des conditions d'utilisation",
-      "terms_h2_11": "10. Fin du service",
-      "terms_h2_12": "11. Droit applicable et résolution des litiges",
-      "terms_h2_13": "12. Dispositions générales",
-      "terms_h2_14": "13. Coordonnées de contact",
-      "terms_p_15": "Urban Balcony fournit du jardinage urbain et de l'aménagement paysager via le site web. Les services sont soumis aux conditions détaillées dans ce document et peuvent être modifiés de temps à autre.",
-      "terms_p_16": "L'utilisation du site est conditionnée au respect des conditions suivantes :",
-      "terms_p_17": "Si les services incluent un paiement :",
-      "terms_p_18": "Les services sont fournis \"en l'état\" sans garantie d'aucune sorte. La société ne sera pas responsable des dommages indirects, consécutifs ou spéciaux résultant de l'utilisation du site, sauf dans les cas où la loi en dispose autrement.",
-      "terms_p_19": "Tout le contenu du site, y compris les textes, images, design et code, est protégé par des droits d'auteur appartenant à Urban Balcony. Il est interdit de reproduire, distribuer ou faire un usage commercial du contenu sans autorisation écrite.",
-      "terms_p_20": "La collecte et l'utilisation d'informations personnelles sont soumises à notre politique de confidentialité. L'utilisation du site constitue un accord à la politique de confidentialité telle que détaillée séparément.",
-      "terms_p_21": "La société se réserve le droit de modifier ces conditions d'utilisation à tout moment. Les modifications substantielles seront publiées sur le site avec un préavis de 30 jours. La poursuite de l'utilisation après la modification constitue un accord aux nouvelles conditions.",
-      "terms_p_22": "La société se réserve le droit d'interrompre ou de limiter le service à tout moment, y compris en cas de violation des conditions d'utilisation. En cas de fin du service, les dispositions des sections pertinentes seront maintenues.",
-      "terms_p_23": "Ces conditions d'utilisation sont soumises aux lois de l'État d'Israël. Tout litige sera traité devant les tribunaux compétents en Israël, en donnant la priorité à l'arbitrage ou à la médiation dans la mesure du possible.",
-      "terms_p_24": "Pour toute question ou clarification concernant les conditions d'utilisation :",
-      "terms_p_25": "© 2025 Urban Balcony. Tous droits réservés.",
-      "terms_p_26": "Créé avec&nbsp;Zappy",
-      "terms_link_27": "Ketem200@gmail.com",
-      "terms_link_28": "Politique de confidentialité",
-      "terms_link_29": "Accessibilité",
-      "terms_link_30": "Conditions d'utilisation",
-      "terms_link_31": "Zappy",
-      "terms_li_32": "\"La société\" - Urban Balcony",
-      "terms_li_33": "\"L'utilisateur\" - toute personne qui navigue ou utilise le site",
-      "terms_li_34": "\"Les services\" - jardinage urbain et aménagement paysager fournis via le site",
-      "terms_li_35": "Utilisation du site à des fins légales uniquement",
-      "terms_li_36": "Non-interférence avec l'activité du site ou d'autres utilisateurs",
-      "terms_li_37": "Non-téléchargement de contenu offensant, illégal ou nuisible",
-      "terms_li_38": "Respect des droits d'auteur et de la propriété intellectuelle",
-      "terms_li_39": "Non-exécution d'actions susceptibles de nuire à la sécurité du site",
-      "terms_li_40": "Fourniture d'informations correctes et précises lors de l'inscription ou de la commande",
-      "terms_li_41": "Maintien de la confidentialité des détails d'accès au compte",
-      "terms_li_42": "Notification immédiate de toute utilisation non autorisée du compte",
-      "terms_li_43": "Mise à jour des informations personnelles si nécessaire",
-      "terms_li_44": "Les paiements sont effectués via des systèmes sécurisés et cryptés",
-      "terms_li_45": "Les prix incluent la TVA comme requis par la loi",
-      "terms_li_46": "Le droit d'annulation de transaction s'appliquera conformément à la loi de protection du consommateur",
-      "terms_li_47": "Les remboursements seront effectués dans les 14 jours ouvrables suivant l'approbation de l'annulation",
-      "terms_li_48": "Si une partie des conditions est déclarée invalide, les autres conditions resteront en vigueur",
-      "terms_li_49": "Le non-exercice d'un droit ne sera pas considéré comme une renonciation à celui-ci",
-      "terms_li_50": "Les conditions d'utilisation constituent l'intégralité de l'accord entre les parties",
-      "terms_li_51": "Entreprise : Urban Balcony",
-      "terms_li_52": "Email : Ketem200@gmail.com",
-      "terms_li_53": "Téléphone : 050-7333256",
-      "terms_li_54": "Adresse : adresse de l'entreprise, Israël",
-      "terms_nav_55": "Services",
-      "terms_nav_56": "À propos",
-      "terms_nav_57": "Galerie",
-      "terms_nav_58": "Contact",
-      "terms_alt_59": "Urban Balcony",
-      "terms_meta_description": "Conditions d'utilisation du site - droits et obligations des utilisateurs",
-      "terms_page_title": "Conditions d'utilisation",
-      "gallery_h1_1": "Galerie de nos projets",
-      "gallery_h2_2": "Notre processus",
-      "gallery_h3_3": "Jardin de toit luxueux - Tel Aviv",
-      "gallery_h3_4": "Jardin de toit luxueux - Tel Aviv",
-      "gallery_h3_5": "Petit balcon - Ramat Gan",
-      "gallery_h3_6": "Petit balcon - Ramat Gan",
-      "gallery_h3_7": "Balcon moderne - Herzliya",
-      "gallery_h3_8": "Balcon moderne - Herzliya",
-      "gallery_h3_9": "Jardin de penthouse - Netanya",
-      "gallery_h3_10": "Jardin de penthouse - Netanya",
-      "gallery_h3_11": "Balcon ombragé - Givatayim",
-      "gallery_h3_12": "Balcon ombragé - Givatayim",
-      "gallery_h3_13": "Toit ensoleillé - Rishon LeZion",
-      "gallery_h3_14": "Toit ensoleillé - Rishon LeZion",
-      "gallery_h3_15": "Jardin vertical - Holon",
-      "gallery_h3_16": "Jardin vertical - Holon",
-      "gallery_h3_17": "Balcon familial - Petah Tikva",
-      "gallery_h3_18": "Balcon familial - Petah Tikva",
-      "gallery_h3_19": "Design minimaliste - Kfar Saba",
-      "gallery_h3_20": "Design minimaliste - Kfar Saba",
-      "gallery_h3_21": "Consultation conseil",
-      "gallery_h3_22": "Planification et design",
-      "gallery_h3_23": "Réalisation professionnelle",
-      "gallery_p_24": "Découvrez les balcons et toits urbains que nous avons transformés en jardins verts spectaculaires",
-      "gallery_p_25": "Chaque projet commence par une vision et se termine par un espace vert et apaisant qui transforme le quotidien. Notre galerie présente une large gamme de projets de jardinage urbain - des petits balcons d'appartements urbains aux toits luxueux. Chaque projet est soigneusement planifié en tenant compte des conditions climatiques, de l'exposition au soleil et du niveau d'entretien souhaité.",
-      "gallery_p_26": "Toit de 120 m² transformé en jardin urbain spectaculaire avec coins salon, végétation riche et système d'irrigation automatique",
-      "gallery_p_27": "Balcon de 8 m² transformé en coin jardin intime avec plantes aromatiques, fleurs saisonnières et coin salon agréable",
-      "gallery_p_28": "Design moderne et minimaliste avec végétation tropicale, éclairage d'ambiance et terrasse en bois de qualité",
-      "gallery_p_29": "Penthouse spectaculaire avec jardin de 200 m², incluant arbres fruitiers, légumes biologiques et coin barbecue",
-      "gallery_p_30": "Solution parfaite pour balcon ombragé avec plantes d'ombre, jardin vertical et coin café agréable",
-      "gallery_p_31": "Toit avec exposition pleine au soleil, plantes résistantes, système d'irrigation intelligent et pergola design",
-      "gallery_p_32": "Solution intelligente pour petit balcon avec jardin vertical spectaculaire, plantes ornementales et herbes aromatiques en abondance",
-      "gallery_p_33": "Balcon design pour toute la famille avec aire de jeux verte, légumes pour culture domestique et coin salon spacieux",
-      "gallery_p_34": "Approche minimaliste avec végétation sélectionnée, pots design et palette de couleurs épurée",
-      "gallery_p_35": "Voici comment nous transformons votre balcon en jardin urbain spectaculaire",
-      "gallery_p_36": "Nous nous rencontrons sur votre balcon, comprenons vos besoins et votre vision, et effectuons des mesures précises",
-      "gallery_p_37": "Nous préparons pour vous un plan détaillé avec des recommandations de plantes, matériaux et solutions de design",
-      "gallery_p_38": "Notre équipe professionnelle exécutera le travail avec soin et professionnalisme",
-      "gallery_p_39": "© 2025 Urban Balcony. Tous droits réservés.",
-      "gallery_p_40": "Créé avec&nbsp;Zappy",
+      "contact_link_30": "Zappy",
+      "contact_link_31": "Politique de confidentialité",
+      "contact_link_32": "Accessibilité",
+      "contact_link_33": "Conditions d'utilisation",
+      "contact_link_34": "Zappy",
+      "gallery_link_68": "Politique de confidentialité",
+      "gallery_link_69": "Accessibilité",
+      "gallery_link_70": "Conditions d'utilisation",
+      "gallery_link_71": "Zappy",
       "gallery_span_41": "Toit",
       "gallery_span_42": "120 m²",
       "gallery_span_43": "Arrosage automatique",
@@ -1436,346 +1348,489 @@
       "gallery_span_65": "Balcon",
       "gallery_span_66": "20 m²",
       "gallery_span_67": "Minimalisme",
-      "gallery_link_68": "Politique de confidentialité",
-      "gallery_link_69": "Accessibilité",
-      "gallery_link_70": "Conditions d'utilisation",
-      "gallery_link_71": "Zappy",
-      "gallery_nav_72": "Services",
-      "gallery_nav_73": "À propos",
-      "gallery_nav_74": "Galerie",
-      "gallery_nav_75": "Contact",
-      "gallery_alt_76": "Urban Balcony",
-      "gallery_alt_77": "Jardin de toit luxueux à Tel Aviv",
-      "gallery_alt_78": "Petit balcon à Ramat Gan",
-      "gallery_alt_79": "Balcon moderne à Herzliya",
-      "gallery_alt_80": "Jardin de penthouse à Netanya",
-      "gallery_alt_81": "Balcon ombragé à Givatayim",
-      "gallery_alt_82": "Toit ensoleillé à Rishon LeZion",
-      "gallery_alt_83": "Jardin vertical à Holon",
-      "gallery_alt_84": "Balcon familial à Petah Tikva",
-      "gallery_alt_85": "Design minimaliste à Kfar Saba",
-      "gallery_alt_86": "Image",
+      "home_page_title": "Transformez votre balcon en jardin urbain — Urban Balcony",
+      "privacy_link_22": "Ketem200@gmail.com",
+      "privacy_link_23": "Politique de confidentialité",
+      "privacy_link_24": "Accessibilité",
+      "privacy_link_25": "Conditions d'utilisation",
+      "privacy_link_26": "Zappy",
+      "services_alt_40": "Urban Balcony",
+      "services_alt_41": "Planification détaillée d'aménagement de balcon urbain",
+      "services_alt_42": "Variété de plantes adaptées au jardinage urbain",
+      "services_alt_43": "Système d'arrosage intelligent automatique pour balcon",
+      "services_alt_44": "Entretien professionnel de jardin de balcon urbain",
+      "services_alt_45": "Balcon écologique avec solutions de jardinage durables",
+      "services_alt_46": "Jardin de toit luxueux avec aménagement paysager sophistiqué",
+      "services_nav_36": "Services",
+      "services_nav_37": "À propos",
+      "services_nav_38": "Galerie",
+      "services_nav_39": "Contact",
+      "about_page_title": "Notre histoire — Urban Balcony",
+      "services_link_30": "Zappy",
+      "services_link_31": "Obtenez un devis",
+      "services_link_32": "Politique de confidentialité",
+      "services_link_33": "Accessibilité",
+      "services_link_34": "Conditions d'utilisation",
+      "services_link_35": "Zappy",
+      "terms_page_title": "Conditions d'utilisation",
+      "accessibility_p_9": "Urban Balcony s'engage à rendre ses services accessibles à l'ensemble du public. Nous œuvrons à mettre en œuvre les directives de la norme israélienne (TI 5568) basée sur les directives WCAG 2.1 niveau AA.",
+      "accessibility_h1_1": "Déclaration d'accessibilité",
+      "accessibility_h2_2": "1. Politique d'accessibilité",
+      "accessibility_h2_3": "2. Dispositions d'accessibilité du site",
+      "accessibility_h2_4": "3. Technologies d'assistance prises en charge",
+      "accessibility_h2_5": "4. Tests d'accessibilité",
+      "accessibility_h2_6": "5. Améliorations continues",
+      "accessibility_h2_7": "6. Contact et retours",
+      "accessibility_h3_8": "Conformité à la norme WCAG 2.1",
+      "accessibility_p_10": "Nous croyons en l'égalité des droits et au droit de chaque personne à recevoir des informations et des services de manière indépendante et équitable. Ce site a été conçu et construit en mettant un accent particulier sur l'accessibilité pour les personnes en situation de handicap.",
+      "accessibility_p_11": "Le site est conforme au niveau AA de la norme WCAG 2.1, qui comprend :",
+      "accessibility_p_12": "Le site est testé au moyen de :",
+      "accessibility_p_13": "Nous travaillons en permanence à l'amélioration de l'accessibilité du site et le mettons à jour en fonction des développements technologiques et des retours des utilisateurs.",
+      "accessibility_p_14": "Si vous rencontrez un problème d'accessibilité sur le site ou avez besoin d'assistance, veuillez nous contacter :",
+      "accessibility_p_15": "Délais de réponse : Nous répondons aux demandes concernant l'accessibilité sous 3 jours ouvrables et agissons pour une résolution sous 10 jours ouvrables.",
+      "accessibility_p_16": "Réclamations : Il est possible de déposer une réclamation auprès du ministère de la Justice - Commissariat à l'égalité des droits pour les personnes en situation de handicap",
+      "accessibility_p_17": "© 2025 Urban Balcony. Tous droits réservés.",
+      "accessibility_p_18": "Créé avec&nbsp;Zappy",
+      "contact_page_title": "Contactez-nous — Urban Balcony",
+      "gallery_page_title": "Galerie de projets - Urban Balcony",
+      "privacy_page_title": "Politique de confidentialité",
+      "accessibility_li_24": "Support de navigation au clavier",
+      "accessibility_li_25": "Support des lecteurs d'écran",
+      "accessibility_li_26": "Contraste de couleurs approprié",
+      "accessibility_li_27": "Tailles de police flexibles et agrandissables",
+      "accessibility_li_28": "Descriptions d'images (Alt text) détaillées",
+      "accessibility_li_29": "Titres structurés hiérarchiquement",
+      "accessibility_li_30": "Liens descriptifs et clairs",
+      "accessibility_li_31": "Support du zoom jusqu'à 200% sans perte de contenu",
+      "accessibility_li_32": "Perceptible : L'information est présentée de manières que les utilisateurs peuvent percevoir",
+      "accessibility_li_33": "Utilisable : Les composants de l'interface sont utilisables",
+      "accessibility_li_34": "Compréhensible : L'information et l'interface utilisateur sont compréhensibles",
+      "accessibility_li_35": "Robuste : Le contenu peut être interprété par une variété de technologies",
+      "accessibility_li_36": "NVDA (Windows)",
+      "accessibility_li_37": "JAWS (Windows)",
+      "accessibility_li_38": "VoiceOver (Mac/iOS)",
+      "accessibility_li_39": "TalkBack (Android)",
+      "accessibility_li_40": "Dragon NaturallySpeaking",
+      "accessibility_li_41": "Navigation par commutateur",
+      "accessibility_li_42": "Outils automatiques de test d'accessibilité",
+      "accessibility_li_43": "Tests manuels avec lecteurs d'écran",
+      "accessibility_li_44": "Navigation au clavier uniquement",
+      "accessibility_li_45": "Test de contraste des couleurs",
+      "accessibility_li_46": "Test avec des utilisateurs en situation de handicap",
+      "accessibility_li_47": "Entreprise : Urban Balcony",
+      "accessibility_li_48": "Email : Ketem200@gmail.com",
+      "accessibility_li_49": "Téléphone : 050-7333256",
+      "services_page_title": "Services professionnels urban jungle balcony — Urban Balcony",
+      "accessibility_alt_54": "Urban Balcony",
+      "accessibility_nav_50": "Services",
+      "accessibility_nav_51": "À propos",
+      "accessibility_nav_52": "Galerie",
+      "accessibility_nav_53": "Nous contacter",
+      "accessibility_link_19": "Ketem200@gmail.com",
+      "accessibility_link_20": "Politique de confidentialité",
+      "accessibility_link_21": "Accessibilité",
+      "accessibility_link_22": "Conditions d'utilisation",
+      "accessibility_link_23": "Zappy",
+      "home_meta_description": "Découvrez le service professionnel d'Urban Balcony pour l'aménagement de balcons urbains. Consultation gratuite maintenant !",
+      "about_meta_description": "Découvrez l'équipe professionnelle d'Urban Balcony - experts en jardinage urbain et aménagement paysager pour balcons et toits.",
+      "terms_meta_description": "Conditions d'utilisation du site - droits et obligations des utilisateurs",
+      "accessibility_page_title": "Déclaration d'accessibilité",
+      "contact_meta_description": "Contactez Urban Balcony pour un conseil gratuit et un devis. Nous serons ravis de vous aider à créer votre balcon vert !",
       "gallery_meta_description": "Galerie de projets d'Urban Balcony - Découvrez nos travaux de jardinage et d'aménagement paysager, balcons urbains et toits-terrasses transformés en jardins verts spectaculaires",
-      "gallery_page_title": "Galerie de projets - Urban Balcony"
+      "privacy_meta_description": "Notre politique de confidentialité - comment nous collectons, utilisons et protégeons vos informations",
+      "services_meta_description": "Services professionnels urban jungle balcony adaptés à vos besoins. Conception, aménagement et entretien de balcons urbains.",
+      "accessibility_meta_description": "Notre déclaration d'accessibilité - notre engagement pour l'accessibilité numérique"
     }
-  }
-};
-  
-  // RTL languages
-  const rtlLanguages = ["he"];
-  
-  // Available languages
-  const availableLanguages = ["he","fr"];
-  
-  // Language display info with SVG flag images for cross-platform compatibility
-  const languageInfo = {"he":{"name":"Hebrew","nativeName":"עברית","flag":"🇮🇱","flagIcon":"circle-flags:il","dir":"rtl","flagImg":"<img src=\"https://api.iconify.design/circle-flags/il.svg\" width=\"20\" height=\"20\" alt=\"\" style=\"display:inline-block;vertical-align:middle;border-radius:50%;\" />"},"fr":{"name":"French","nativeName":"Français","flag":"🇫🇷","flagIcon":"circle-flags:fr","dir":"ltr","flagImg":"<img src=\"https://api.iconify.design/circle-flags/fr.svg\" width=\"20\" height=\"20\" alt=\"\" style=\"display:inline-block;vertical-align:middle;border-radius:50%;\" />"}};
-  
-  // Detect stored language preference - only use stored value, not browser language
-  // This ensures the site respects its original design (e.g., RTL Hebrew site stays RTL by default)
-  function detectLanguage() {
-    const stored = localStorage.getItem('zappy_lang');
-    if (stored && availableLanguages.includes(stored)) return stored;
-    
-    // Always default to the site's default language, not browser language
-    // This prevents breaking the original site layout on first visit
-    return 'he';
-  }
-  
-  // Simple i18n implementation (no external dependency)
-  const zappyI18n = {
-    language: detectLanguage(),
-    resources: resources,
-    t: function(key) {
-      const langResources = this.resources[this.language];
-      if (langResources && langResources.translation && langResources.translation[key]) {
-        return langResources.translation[key];
-      }
-      // Fallback to default language
-      const fallbackResources = this.resources['he'];
-      if (fallbackResources && fallbackResources.translation && fallbackResources.translation[key]) {
-        return fallbackResources.translation[key];
-      }
-      return key;
-    },
-    changeLanguage: function(lang) {
-      if (!availableLanguages.includes(lang)) return Promise.resolve();
-      this.language = lang;
-      localStorage.setItem('zappy_lang', lang);
-      updateContent();
-      updateDirection();
-      return Promise.resolve();
-    },
-    getCurrentLanguage: function() { return this.language; },
-    getAvailableLanguages: function() { return availableLanguages; }
-  };
-  
-  // Update all translatable content
-  function updateContent() {
-    // Newline character for detection
-    var newlineChar = String.fromCharCode(10);
-    
-    // Update text content - use innerHTML only when text contains line breaks
-    document.querySelectorAll('[data-i18n]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n');
-      var translation = zappyI18n.t(key);
-      if (translation && translation !== key) {
-        // Check if translation contains newlines that need to be rendered as <br>
-        if (translation.indexOf(newlineChar) !== -1) {
-          // Convert newlines to <br> and use innerHTML to preserve HTML formatting
-          el.innerHTML = translation.split(newlineChar).join('<br>');
-        } else {
-          // No newlines, use textContent for safety
-          el.textContent = translation;
-        }
-      }
-    });
-    
-    // Update placeholders
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
-      const key = el.getAttribute('data-i18n-placeholder');
-      const translation = zappyI18n.t(key);
-      if (translation && translation !== key) {
-        el.setAttribute('placeholder', translation);
-      }
-    });
-    
-    // Update alt attributes
-    document.querySelectorAll('[data-i18n-alt]').forEach(function(el) {
-      const key = el.getAttribute('data-i18n-alt');
-      const translation = zappyI18n.t(key);
-      if (translation && translation !== key) {
-        el.setAttribute('alt', translation);
-      }
-    });
-    
-    // Update title attributes
-    document.querySelectorAll('[data-i18n-title]').forEach(function(el) {
-      const key = el.getAttribute('data-i18n-title');
-      const translation = zappyI18n.t(key);
-      if (translation && translation !== key) {
-        el.setAttribute('title', translation);
-      }
-    });
-    
-    // Update meta description
-    document.querySelectorAll('[data-i18n-content]').forEach(function(el) {
-      const key = el.getAttribute('data-i18n-content');
-      const translation = zappyI18n.t(key);
-      if (translation && translation !== key) {
-        el.setAttribute('content', translation);
-      }
-    });
-    
-    // Update page title
-    const titleEl = document.querySelector('title[data-i18n]');
-    if (titleEl) {
-      const key = titleEl.getAttribute('data-i18n');
-      const translation = zappyI18n.t(key);
-      if (translation && translation !== key) {
-        document.title = translation;
-      }
-    }
-  }
-  
-  // Update document direction based on language
-  function updateDirection() {
-    const currentLang = zappyI18n.language;
-    const isRTL = rtlLanguages.includes(currentLang);
-    const html = document.documentElement;
-    const body = document.body;
-    const newDir = isRTL ? 'rtl' : 'ltr';
-    
-    // Update html element - only direction, NOT text-align (preserve centered elements)
-    html.setAttribute('lang', currentLang);
-    html.setAttribute('dir', newDir);
-    html.style.direction = newDir;
-    
-    // Update body element - only direction
-    if (body) {
-      body.setAttribute('dir', newDir);
-      body.style.direction = newDir;
-    }
-    
-    // Update major content containers - only direction, NOT text-align
-    // This preserves centered hero sections, titles, etc.
-    document.querySelectorAll('main, article, section, .content, .container, .wrapper').forEach(function(el) {
-      el.style.direction = newDir;
-      // Do NOT set text-align - preserve original alignment (center, left, right)
-    });
-    
-    // ONLY apply text-align to legal page content
-    document.querySelectorAll('.legal-content, .terms-content, .privacy-content').forEach(function(el) {
-      el.style.direction = newDir;
-      el.style.textAlign = isRTL ? 'right' : 'left';
-    });
-    
-    // Update navigation/header - set direction and justify-content
-    // Don't set flex-direction here - let CSS handle it with media queries to preserve mobile menu
-    document.querySelectorAll('header, nav, .navbar, .nav-container, .header-container').forEach(function(el) {
-      el.style.direction = newDir;
-      el.style.justifyContent = 'flex-start';
-      // Only set flex-direction on desktop (check viewport width)
-      if (window.innerWidth >= 768) {
-        el.style.flexDirection = 'row';
-      }
-    });
-    
-    // Update nav menus/links container - reset margins (include #navMenu id selector)
-    // Don't override flex-direction on mobile menus
-    document.querySelectorAll('.nav-menu, .nav-links, .menu, nav ul, header ul, #navMenu').forEach(function(el) {
-      el.style.direction = newDir;
-      el.style.marginLeft = '0';
-      el.style.marginRight = '0';
-      // Only set flex-direction on desktop
-      if (window.innerWidth >= 768) {
-        el.style.flexDirection = 'row';
-      }
-    });
-    
-    // Reset all nav link margins to keep them near logo
-    document.querySelectorAll('header > a, nav > a, .nav-menu > a, .nav-links > a, nav ul li, header ul li').forEach(function(el) {
-      // Skip CTA buttons - they need their auto margin
-      if (el.classList.contains('btn') || el.classList.contains('button') || el.classList.contains('cta') || 
-          el.className.includes('btn-') || el.className.includes('button-')) {
-        return;
-      }
-      el.style.marginLeft = '0';
-      el.style.marginRight = '0';
-    });
-    
-    // Reset logo margins (including nav-brand class)
-    document.querySelectorAll('.logo, .site-logo, .brand, .navbar-brand, .nav-brand').forEach(function(el) {
-      el.style.marginLeft = '0';
-      el.style.marginRight = '0';
-    });
-    
-    // Position language switcher next to CTA - it should have the auto margin to push both to the end
-    document.querySelectorAll('header .lang-switcher, nav .lang-switcher, .navbar .lang-switcher').forEach(function(el) {
-      if (isRTL) {
-        el.style.marginRight = 'auto';
-        el.style.marginLeft = '8px';
-      } else {
-        el.style.marginLeft = 'auto';
-        el.style.marginRight = '8px';
-      }
-    });
-    
-    // CTA buttons should be right after language switcher (no auto margin needed if lang-switcher has it)
-    document.querySelectorAll('header .btn, header .button, header .cta, nav .btn, nav .button, .navbar .btn, .nav-cta-container, .cta-container, .header-cta, .nav-cta').forEach(function(el) {
-      // Remove auto margins from CTA since lang-switcher handles positioning
-      el.style.marginLeft = '0';
-      el.style.marginRight = '0';
-    });
-    
-    // Globe icon SVG for language switcher button (minimal design, no chevron)
-    const globeIconSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12.039,.002s0,0,0,0c-.013,0-.026-.002-.039-.002-.005,0-.009,0-.014,0-.002,0-.003,0-.005,0C5.373,.011,0,5.39,0,12s5.383,12,12,12,12-5.383,12-12S18.638,.023,12.039,.002Zm9.747,6.998h-4.814c-1.067-2.669-2.712-4.781-3.731-5.925,3.734,.421,6.901,2.719,8.546,5.925Zm-4.786,5c0,1.407-.292,2.753-.731,4H7.731c-.439-1.247-.731-2.593-.731-4s.292-2.754,.73-4h8.539c.439,1.247,.731,2.593,.731,4Zm-1.122,5c-1.229,2.838-3.116,4.99-3.878,5.788-.762-.798-2.649-2.95-3.878-5.788h7.755ZM8.121,7c1.229-2.841,3.117-4.992,3.879-5.789,.762,.798,2.649,2.95,3.878,5.789h-7.757ZM10.757,1.075c-1.025,1.15-2.668,3.264-3.73,5.925H2.214C3.859,3.795,7.024,1.498,10.757,1.075ZM1.764,8H6.668c-.403,1.247-.668,2.589-.668,4s.265,2.752,.669,4H1.764c-.487-1.242-.764-2.588-.764-4s.277-2.758,.764-4Zm.45,9H7.029c1.067,2.669,2.712,4.781,3.731,5.925-3.734-.421-6.901-2.719-8.546-5.925Zm11.026,5.925c1.019-1.144,2.664-3.257,3.731-5.925h4.814c-1.645,3.206-4.812,5.504-8.546,5.925Zm8.996-6.925h-4.905c.404-1.248,.669-2.589,.669-4s-.265-2.752-.669-4h4.905c.487,1.242,.764,2.588,.764,4s-.277,2.758-.764,4Z"/></svg>';
-    
-    // Update language switcher display - just the globe icon, no arrow
-    const currentLangEl = document.querySelector('.lang-switcher-current');
-    if (currentLangEl) {
-      currentLangEl.innerHTML = globeIconSvg;
-    }
-    
-    // Update dropdown options (show all except current)
-    document.querySelectorAll('.lang-switcher-dropdown').forEach(function(dropdown) {
-      dropdown.innerHTML = availableLanguages
-        .filter(function(lang) { return lang !== currentLang; })
-        .map(function(lang) {
-          const info = languageInfo[lang] || { flag: '🌐', flagImg: '🌐', nativeName: lang };
-          // Use flagImg (SVG) for cross-platform compatibility, fallback to emoji flag
-          return '<button class="lang-option" data-lang="' + lang + '" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:none;border:none;text-align:left;cursor:pointer;font-size:14px;color:#333;">' + (info.flagImg || info.flag) + ' ' + info.nativeName + '</button>';
-        })
-        .join('');
-      
-      // Re-attach event listeners
-      dropdown.querySelectorAll('.lang-option').forEach(function(option) {
-        option.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const lang = this.getAttribute('data-lang');
-          zappyI18n.changeLanguage(lang);
-          dropdown.style.opacity = '0';
-          dropdown.style.visibility = 'hidden';
-          dropdown.style.transform = 'translateY(-8px)';
-        });
-      });
-    });
-  }
-  
-  // Initialize language switcher dropdown
-  function initLanguageSwitcher() {
-    const switchers = document.querySelectorAll('.lang-switcher');
-    if (!switchers.length) return;
-    
-    switchers.forEach(function(switcher) {
-      const dropdown = switcher.querySelector('.lang-switcher-dropdown');
-      const current = switcher.querySelector('.lang-switcher-current');
-      
-      if (!current || !dropdown) return;
-      
-      // Ensure dropdown is hidden initially (inline style fallback)
-      dropdown.style.opacity = '0';
-      dropdown.style.visibility = 'hidden';
-      dropdown.style.transform = 'translateY(-8px)';
-      
-      // Toggle dropdown with inline styles
-      current.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = dropdown.style.opacity === '1';
-        if (isOpen) {
-          dropdown.style.opacity = '0';
-          dropdown.style.visibility = 'hidden';
-          dropdown.style.transform = 'translateY(-8px)';
-        } else {
-          dropdown.style.opacity = '1';
-          dropdown.style.visibility = 'visible';
-          dropdown.style.transform = 'translateY(0)';
-        }
-      });
-      
-      // Handle language selection
-      dropdown.querySelectorAll('.lang-option').forEach(function(option) {
-        option.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const lang = this.getAttribute('data-lang');
-          zappyI18n.changeLanguage(lang);
-          dropdown.style.opacity = '0';
-          dropdown.style.visibility = 'hidden';
-          dropdown.style.transform = 'translateY(-8px)';
-        });
-      });
-    });
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function() {
-      document.querySelectorAll('.lang-switcher-dropdown').forEach(function(dropdown) {
-        dropdown.style.opacity = '0';
-        dropdown.style.visibility = 'hidden';
-        dropdown.style.transform = 'translateY(-8px)';
-      });
-    });
-  }
-  
-  // Initialize on DOM ready
-  function init() {
-    updateContent();
-    updateDirection();
-    initLanguageSwitcher();
-  }
-  
-  // Expose to global scope
-  window.zappyI18n = zappyI18n;
-  
-  // Run initialization
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-</script>
+  },
+  "en": {
+    "translation": {
+      "home_h1_1": "Transform your urban balcony into a living garden",
+      "home_h2_2": "Welcome to Urban Balcony",
+      "home_h2_3": "Our Leading Services",
+      "home_h2_4": "Why Choose Urban Balcony?",
+      "home_h2_5": "What Our Customers Say",
+      "home_h2_6": "Ready to Start Your Green Journey?",
+      "home_h3_7": "Experts in landscape design and gardening for urban balconies and rooftops - creating a unique urban jungle balcony experience",
+      "home_h3_8": "Balcony Planning and Design",
+      "home_h3_9": "Customized Plant Selection",
+      "home_p_15": "Happily created by&nbsp;Zappy",
+      "home_p_16": "We specialize in transforming small urban balconies and rooftops into green and relaxing spaces. With years of experience in urban gardening and landscape design, we create customized solutions that bring nature into your urban home. Whether you're a homeowner looking to upgrade your living space, a young family wanting to create a green and educational environment for children, or luxury apartment residents seeking the perfect living experience - we're here to make your vision come true.",
+      "home_p_17": "Our services include comprehensive planning, selection of plants adapted to urban climate conditions, smart irrigation systems, and ongoing maintenance. We believe that every balcony, even the smallest one, can become a green sanctuary that improves quality of life and connects us to nature.",
+      "home_p_18": "Comprehensive planning and establishment of a small balcony garden tailored to your needs, including plant selection, furniture arrangement, and irrigation systems.",
+      "home_p_19": "Expertise in selecting plants suitable for urban climate conditions, sun exposure levels, and your maintenance requirements.",
+      "home_p_20": "Installation of automatic and smart irrigation systems that save time and water, ensuring your plants receive the exact amount of water needed.",
+      "home_p_21": "Professional team with extensive experience in planning and establishing gardens on urban balconies, understanding the unique challenges of the urban environment.",
+      "home_p_22": "Use of local plants, water-saving irrigation systems, and organic fertilizers - we care for the environment while creating your perfect balcony.",
+      "home_p_23": "Every project is specially designed for you, taking into account personal style, budget, and desired maintenance level.",
+      "home_p_24": "Ongoing professional maintenance services that ensure your balcony stays green and well-maintained throughout the year.",
+      "home_p_25": "\"Urban Balcony transformed our small balcony into a true paradise. The plants are thriving and the balcony has become our favorite place in the house. Thank you for the professional service!\"",
+      "home_p_26": "— Sarah Cohen, Tel Aviv",
+      "home_p_27": "\"As a family with young children, it's very important for us to be surrounded by greenery. The team helped us create an ecological balcony that the children love and is easy to maintain. Highly recommended!\"",
+      "home_p_28": "— Danny and Ronit Levy, Ramat Gan",
+      "home_p_29": "\"The professional planning and attention to small details transformed our rooftop into a luxurious and relaxing space. Definitely a worthwhile investment!\"",
+      "home_p_30": "— Michael Abraham, Herzliya",
+      "home_p_31": "Contact us today for free consultation and a personalized quote. Let's transform your balcony into a green and relaxing space!",
+      "home_p_32": "© 2025 Urban Balcony. All rights reserved.",
+      "home_p_33": "Created with&nbsp;Zappy",
+      "about_h1_1": "Our Story",
+      "about_h2_2": "How It All Started",
+      "about_h2_3": "The Values That Guide Us",
+      "about_h2_4": "Our Mission",
+      "about_h2_5": "Our Professional Team",
+      "about_h2_6": "Want to Join Our Customer Family?",
+      "about_h3_7": "Experts in transforming urban balconies into green and relaxing spaces",
+      "about_h3_8": "Customer Commitment",
+      "about_h3_9": "Environmental Responsibility",
+      "about_p_12": "Happily created by&nbsp;Zappy",
+      "about_p_13": "Urban Balcony was born from a deep love of nature and passion for design. Our story began several years ago when we discovered how difficult it was to find quality, customer-focused solutions for urban balcony gardening. Many city apartment owners dreamed of a private green space but didn't know how to start or which plants would suit the unique conditions of the urban environment.",
+      "about_p_14": "We decided to create a business that specializes exactly in this - transforming urban balconies and rooftops into green and inviting spaces. We started with a few small projects, and thanks to our commitment to quality, personal service, and impressive results, our reputation grew rapidly. Today, we're proud to be one of the leading providers of urban gardening and landscape design services for balconies in the area.",
+      "about_p_15": "Our philosophy is simple: every balcony, even the smallest one, can become a green sanctuary that improves quality of life, connects us to nature, and provides a relaxing and inspiring space. We believe that urban gardening is not just about beautiful plants, but also about creating a healthy, sustainable, and inviting environment that reflects each client's personality and style.",
+      "about_p_16": "We believe every customer is unique and deserves personal and customized service. We listen to needs, understand the vision, and work with complete transparency to create the perfect balcony for you.",
+      "about_p_17": "We care for the environment and use ecological and sustainable gardening methods. Selecting local plants, water conservation, and using organic fertilizers are an integral part of our work.",
+      "about_p_18": "Our team consists of experienced experts in gardening, landscape design, and irrigation. We use the highest quality raw materials and insist on perfect execution in every project.",
+      "about_p_19": "We're always looking for innovative and creative solutions to maximize the potential of every balcony. From smart irrigation technologies to unique designs - we're not afraid to think outside the box.",
+      "about_p_20": "Urban Balcony's mission is to make the urban environment greener and healthier, one balcony at a time. We believe that urban gardening is not just a trend, but a vital need in the modern world. Our balconies and rooftops are the perfect place to bring nature back into the urban home, improve air quality, and provide a relaxing and inspiring space.",
+      "about_p_21": "We strive to be the leaders in urban gardening in Israel, and to continue innovating and improving our services to meet the changing needs of our customers. We want every person living in the city to be able to enjoy the urban balcony experience - a private green space that connects us to nature and improves quality of life.",
+      "about_p_22": "Additionally, we're committed to education and raising awareness about the importance of urban gardening and environmental sustainability. We share our knowledge and experience with customers, organize workshops and study days, and support community projects that promote urban greenery.",
+      "about_p_23": "The Urban Balcony team consists of experienced experts in gardening, landscape design, irrigation, and maintenance. Each team member brings deep knowledge, years of experience, and genuine passion for the work. We work as a cohesive and committed team, and maintain open and transparent communication with our customers.",
+      "about_p_24": "Our team includes landscape designers with academic degrees, certified gardeners, professional irrigation technicians, and dedicated service personnel. Each of us brings their unique expertise, and together we create comprehensive and quality solutions that meet the highest standards.",
+      "about_p_25": "We are proud of our team and their commitment to excellence, personal service, and customer satisfaction. Every project is an opportunity for us to demonstrate our professionalism and dedication, and to create a balcony that will provide years of enjoyment and satisfaction.",
+      "about_p_26": "We would be happy to help you realize your green balcony vision. Contact us today for free consultation and start the exciting journey of creating your own urban jungle balcony!",
+      "about_p_27": "© 2025 Urban Balcony. All rights reserved.",
+      "about_p_28": "Created with&nbsp;Zappy",
+      "home_h3_10": "Smart Irrigation Systems",
+      "home_h3_11": "Urban Gardening Expertise",
+      "home_h3_12": "Ecological Solutions",
+      "home_h3_13": "Custom Design",
+      "home_h3_14": "Professional Maintenance",
+      "terms_h1_1": "Terms of Use",
+      "terms_h2_2": "1. Definitions",
+      "terms_h2_3": "2. Service Description",
+      "terms_h2_4": "3. Terms of Use",
+      "terms_h2_5": "4. User Obligations",
+      "terms_h2_6": "5. Payment and Refund Policy",
+      "terms_h2_7": "6. Limitation of Liability",
+      "terms_h2_8": "7. Copyright and Intellectual Property",
+      "terms_h2_9": "8. Privacy",
+      "terms_p_15": "Urban Balcony provides urban gardening and landscape design through the website. The services are subject to the terms detailed in this document and may change from time to time.",
+      "terms_p_16": "Use of the website is conditional upon compliance with the following terms:",
+      "terms_p_17": "If the services include payment:",
+      "terms_p_18": "The services are provided \"as is\" without warranty of any kind. The company will not be liable for indirect, consequential or special damages arising from use of the website, except in cases where the law provides otherwise.",
+      "terms_p_19": "All content on the website, including texts, images, design and code, is protected by copyrights belonging to Urban Balcony. It is prohibited to copy, distribute or make commercial use of the content without written permission.",
+      "terms_p_20": "Collection and use of personal information is subject to our privacy policy. Use of the website constitutes agreement to the privacy policy as detailed separately.",
+      "terms_p_21": "The company may change these terms of use at any time. Material changes will be published on the website with 30 days advance notice. Continued use after the change constitutes agreement to the new terms.",
+      "terms_p_22": "The company may discontinue or limit the service at any time, including in case of violation of the terms of use. In case of service termination, the provisions of the relevant sections will remain in effect.",
+      "terms_p_23": "These terms of use are subject to the laws of the State of Israel. Any dispute will be heard in the competent courts in Israel, with preference given to arbitration or mediation where possible.",
+      "terms_p_24": "For questions or clarifications regarding the terms of use:",
+      "terms_p_25": "© 2025 Urban Balcony. All rights reserved.",
+      "terms_p_26": "Created with&nbsp;Zappy",
+      "about_h3_10": "Professionalism and Quality",
+      "about_h3_11": "Creativity and Innovation",
+      "home_alt_46": "Urban Balcony",
+      "home_alt_47": "Designed urban balcony with green garden full of plants",
+      "home_alt_48": "Professional urban balcony planning and design",
+      "home_alt_49": "Variety of plants and flowers for urban balcony",
+      "home_alt_50": "Smart automatic irrigation system for balcony",
+      "home_alt_51": "Family enjoying their green balcony",
+      "home_nav_42": "Services",
+      "home_nav_43": "About",
+      "home_nav_44": "Gallery",
+      "home_nav_45": "Contact",
+      "terms_h2_10": "9. Changes to Terms of Use",
+      "terms_h2_11": "10. Service Termination",
+      "terms_h2_12": "11. Governing Law and Dispute Resolution",
+      "terms_h2_13": "12. General Provisions",
+      "terms_h2_14": "13. Contact Details",
+      "terms_li_32": "\"The Company\" - Urban Balcony",
+      "terms_li_33": "\"The User\" - anyone who browses or uses the website",
+      "terms_li_34": "\"The Services\" - urban gardening and landscape design provided through the website",
+      "terms_li_35": "Using the website for legal purposes only",
+      "terms_li_36": "Not interfering with website operations or other users",
+      "terms_li_37": "Not uploading offensive, illegal, or harmful content",
+      "terms_li_38": "Respecting copyrights and intellectual property",
+      "terms_li_39": "Not performing actions that may compromise website security",
+      "terms_li_40": "Providing accurate and correct information during registration or ordering",
+      "terms_li_41": "Maintaining confidentiality of account access details",
+      "terms_li_42": "Immediate notification of any unauthorized account use",
+      "terms_li_43": "Updating personal information as needed",
+      "terms_li_44": "Payments are processed through secure and encrypted systems",
+      "terms_li_45": "Prices include VAT as required by law",
+      "terms_li_46": "Right of cancellation will be in accordance with Consumer Protection Law",
+      "terms_li_47": "Refunds will be processed within 14 business days from cancellation approval",
+      "terms_li_48": "If any part of the terms is declared invalid, the remaining terms will remain in effect",
+      "terms_li_49": "Non-enforcement of a right will not be considered a waiver of it",
+      "terms_li_50": "Terms of use constitute the entire agreement between the parties",
+      "terms_li_51": "Company: Urban Balcony",
+      "terms_li_52": "Email: Ketem200@gmail.com",
+      "terms_li_53": "Phone: 050-7333256",
+      "terms_li_54": "Address: Company Address, Israel",
+      "about_alt_39": "Urban Balcony",
+      "about_nav_35": "Services",
+      "about_nav_36": "About",
+      "about_nav_37": "Gallery",
+      "about_nav_38": "Contact",
+      "contact_h1_1": "Our Projects",
+      "contact_h3_2": "Gallery of gardening and urban balcony projects",
+      "contact_h3_3": "Modern Urban Balcony",
+      "contact_h3_4": "Rooftop Garden Upgrade",
+      "contact_h3_5": "Urban Jungle on Small Balcony",
+      "contact_h3_6": "Smart Irrigation System",
+      "contact_h3_7": "Urban Herb Garden",
+      "contact_h3_8": "Luxury Penthouse Balcony",
+      "contact_h3_9": "Vertical Garden",
+      "contact_p_15": "Happily created by&nbsp;Zappy",
+      "contact_p_16": "Balcony design with rich vegetation and comfortable seating area",
+      "contact_p_17": "Transforming a rooftop into an urban garden with variety of plants and flowers",
+      "contact_p_18": "Maximum utilization of small space to create an impressive green corner",
+      "contact_p_19": "Installation of automatic irrigation system for balcony garden",
+      "contact_p_20": "Balcony with fresh herb garden for daily use",
+      "contact_p_21": "Complete landscape design for penthouse balcony with diverse vegetation",
+      "contact_p_22": "Installation of vertical garden on balcony wall for maximum space utilization",
+      "contact_p_23": "Balcony design with variety of succulents and cacti",
+      "contact_p_24": "Family-friendly balcony design with play area and vegetation",
+      "contact_p_25": "Mediterranean-style balcony with aromatic plants and flowers",
+      "contact_p_26": "Zen-style balcony with minimalist and calming vegetation",
+      "contact_p_27": "Transforming regular balcony into colorful and spectacular flower garden",
+      "contact_p_28": "© 2025 Urban Balcony. All rights reserved.",
+      "contact_p_29": "Created with&nbsp;Zappy",
+      "gallery_h1_1": "Our Project Gallery",
+      "gallery_h2_2": "Our Process",
+      "gallery_h3_3": "Luxury Rooftop Garden - Tel Aviv",
+      "gallery_h3_4": "Luxury Rooftop Garden - Tel Aviv",
+      "gallery_h3_5": "Small Balcony - Ramat Gan",
+      "gallery_h3_6": "Small Balcony - Ramat Gan",
+      "gallery_h3_7": "Modern Balcony - Herzliya",
+      "gallery_h3_8": "Modern Balcony - Herzliya",
+      "gallery_h3_9": "Penthouse Garden - Netanya",
+      "gallery_p_24": "See how we transformed urban balconies and rooftops into stunning green gardens",
+      "gallery_p_25": "Every project begins with a vision and ends with a green, calming space that transforms daily life. Our gallery showcases a wide range of urban gardening projects - from small balconies in city apartments to luxury rooftops. Each project is carefully planned considering climate conditions, sun exposure, and desired maintenance level.",
+      "gallery_p_26": "A 120 sqm rooftop transformed into a stunning urban garden with seating areas, rich vegetation and automatic irrigation system",
+      "gallery_p_27": "An 8 sqm balcony transformed into an intimate garden corner with herb plants, seasonal flowers and a pleasant seating area",
+      "gallery_p_28": "Modern and minimalist design with tropical vegetation, ambient lighting and quality deck flooring",
+      "gallery_p_29": "Stunning penthouse with a 200 sqm garden, including fruit trees, organic vegetables and BBQ area",
+      "gallery_p_30": "Perfect solution for a shaded balcony with shade-loving plants, vertical garden and pleasant coffee corner",
+      "gallery_p_31": "Rooftop with full sun exposure, hardy plants, smart irrigation system and designed pergola",
+      "gallery_p_32": "Smart solution for a small balcony with stunning vertical garden, ornamental plants and abundant herbs",
+      "gallery_p_33": "Designed balcony for the whole family with green play area, vegetables for home growing and spacious seating area",
+      "gallery_p_34": "Minimalist approach with selected vegetation, designed planters and clean color palette",
+      "gallery_p_35": "This is how we transform your balcony into a stunning urban garden",
+      "gallery_p_36": "We meet at your balcony, understand your needs and vision, and take precise measurements",
+      "gallery_p_37": "We prepare a detailed plan with recommendations for plants, materials and design solutions",
+      "gallery_p_38": "Our professional team will execute the work with care and professionalism",
+      "gallery_p_39": "© 2025 Urban Balcony. All rights reserved.",
+      "gallery_p_40": "Created with&nbsp;Zappy",
+      "home_link_34": "Zappy",
+      "home_link_35": "Get Free Consultation",
+      "home_link_36": "All Our Services",
+      "home_link_37": "Get Free Consultation",
+      "home_link_38": "Privacy Policy",
+      "home_link_39": "Accessibility",
+      "home_link_40": "Terms of Use",
+      "home_link_41": "Zappy",
+      "privacy_h1_1": "Privacy Policy",
+      "privacy_h2_2": "1. Information Collection",
+      "privacy_h2_3": "2. Use of Information",
+      "privacy_h2_4": "3. Information Sharing",
+      "privacy_h2_5": "4. User Rights",
+      "privacy_h2_6": "5. Cookies",
+      "privacy_h2_7": "6. Information Security",
+      "privacy_h2_8": "7. Policy Changes",
+      "privacy_h2_9": "8. Contact",
+      "privacy_p_10": "Urban Balcony (\"the Company\", \"we\", \"our\") is committed to protecting your privacy. This privacy policy explains how we collect, use and protect your information when using the website www.company.com (\"the Service\").",
+      "privacy_p_11": "We may collect the following types of information:",
+      "privacy_p_12": "We use the collected information for the following purposes:",
+      "privacy_p_13": "We will not sell, rent or share your personal information with third parties, except in the following cases:",
+      "privacy_p_14": "In accordance with the Privacy Protection Law 1981, you have the following rights:",
+      "privacy_p_15": "Our website uses cookies to improve user experience. You can manage cookies through your browser settings. Disabling cookies may affect website functionality.",
+      "privacy_p_16": "We take reasonable security measures to protect your information, including encryption, firewalls and restricted access control. However, no transmission or storage method is 100% secure.",
+      "privacy_p_17": "We may update this privacy policy from time to time. Material changes will be published on the website with 30 days advance notice.",
+      "privacy_p_18": "For questions or requests regarding this privacy policy, you can contact us:",
+      "privacy_p_19": "Database Registrar: For complaints, you can contact the Database Registrar at the Ministry of Justice",
+      "privacy_p_20": "© 2025 Urban Balcony. All rights reserved.",
+      "privacy_p_21": "Created with&nbsp;Zappy",
+      "terms_alt_59": "Urban Balcony",
+      "terms_nav_55": "Services",
+      "terms_nav_56": "About",
+      "terms_nav_57": "Gallery",
+      "terms_nav_58": "Contact",
+      "about_link_29": "Zappy",
+      "about_link_30": "Contact Us",
+      "about_link_31": "Privacy Policy",
+      "about_link_32": "Accessibility",
+      "about_link_33": "Terms of Use",
+      "about_link_34": "Zappy",
+      "contact_h3_10": "Succulent Garden",
+      "contact_h3_11": "Family Balcony",
+      "contact_h3_12": "Mediterranean Style",
+      "contact_h3_13": "Minimalist Zen Design",
+      "contact_h3_14": "Colorful Flower Balcony",
+      "gallery_h3_10": "Penthouse Garden - Netanya",
+      "gallery_h3_11": "Shaded Balcony - Givatayim",
+      "gallery_h3_12": "Shaded Balcony - Givatayim",
+      "gallery_h3_13": "Sun-Drenched Rooftop - Rishon LeZion",
+      "gallery_h3_14": "Sun-Drenched Rooftop - Rishon LeZion",
+      "gallery_h3_15": "Vertical Garden - Holon",
+      "gallery_h3_16": "Vertical Garden - Holon",
+      "gallery_h3_17": "Family Balcony - Petah Tikva",
+      "gallery_h3_18": "Family Balcony - Petah Tikva",
+      "gallery_h3_19": "Minimalist Design - Kfar Saba",
+      "gallery_h3_20": "Minimalist Design - Kfar Saba",
+      "gallery_h3_21": "Consultation Meeting",
+      "gallery_h3_22": "Planning & Design",
+      "gallery_h3_23": "Professional Execution",
+      "privacy_li_27": "Personal information: name, email address, phone number and address",
+      "privacy_li_28": "Technical information: IP address, browser type, operating system and website usage data",
+      "privacy_li_29": "Cookies: information stored on your computer to improve user experience",
+      "privacy_li_30": "Providing the requested services",
+      "privacy_li_31": "Improving the service and user experience",
+      "privacy_li_32": "Contacting you regarding our services",
+      "privacy_li_33": "Compliance with legal requirements",
+      "privacy_li_34": "With your explicit consent",
+      "privacy_li_35": "When required by law",
+      "privacy_li_36": "To protect our rights or the security of our users",
+      "privacy_li_37": "With service providers who assist in operating the service (under confidentiality agreements)",
+      "privacy_li_38": "Right to access personal information stored about you",
+      "privacy_li_39": "Right to correct incorrect or inaccurate information",
+      "privacy_li_40": "Right to delete personal information under certain circumstances",
+      "privacy_li_41": "Right to object to information processing for marketing purposes",
+      "privacy_li_42": "Right to file a complaint with the Database Registrar",
+      "privacy_li_43": "Company: Urban Balcony",
+      "privacy_li_44": "Email: Ketem200@gmail.com",
+      "privacy_li_45": "Phone: 050-7333256",
+      "privacy_li_46": "Address: Company Address, Israel",
+      "services_h1_1": "Our Professional Services",
+      "services_h2_2": "Urban Balcony Design and Planning",
+      "services_h2_3": "Plant Selection and Installation",
+      "services_h2_4": "Smart Irrigation Systems",
+      "services_h2_5": "Ongoing Maintenance",
+      "services_h2_6": "Ecological and Sustainability Consulting",
+      "services_h2_7": "Luxury Rooftop and Balcony Design",
+      "services_h2_8": "Interested in one of our services?",
+      "services_h3_9": "Comprehensive solutions for urban balcony design and gardening - from planning to ongoing maintenance",
+      "services_p_10": "Happily created by&nbsp;Zappy",
+      "services_p_11": "Our comprehensive service begins with a personal consultation meeting where we learn about your needs, preferences, and budget. We conduct a detailed survey of the balcony or rooftop, examining sun exposure conditions, wind directions, and weight and space limitations. We then create a detailed design plan including diagrams, 3D visualizations, and a recommended plant list.",
+      "services_p_12": "Our planning takes into account all aspects - from selecting resilient plants suitable for urban climate conditions, through furniture arrangement and decorative elements, to installing irrigation and lighting systems. We specialize in creating gardens on small balconies and know how to maximize every centimeter while maintaining a sense of space and airiness.",
+      "services_p_13": "Our goal is to create an urban jungle balcony that reflects your personality and provides you with a green and relaxing space you can enjoy throughout the year.",
+      "services_p_14": "Selecting the right plants is critical to project success. We specialize in plants particularly suited to urban conditions - resistant to air pollution, adapting well to varying exposure conditions, and requiring reasonable maintenance. Our variety includes green ornamental plants, seasonal flowers, herbs, and edible plants.",
+      "services_p_15": "We work with leading suppliers and select high-quality, healthy, and strong plants. Each plant comes with detailed care instructions and recommendations for watering, fertilizing, and pruning. We also offer seasonal plant replacement services to keep your balcony colorful and vibrant throughout the year.",
+      "services_p_16": "Additionally, we specialize in selecting designed planters and growing containers that complement the design style and ensure optimal growing conditions for the plants.",
+      "services_p_17": "A proper irrigation system is the key to maintaining your balcony garden. We install advanced automatic irrigation systems specially adapted to the urban environment. Our systems include smart timers that can be programmed according to a precise schedule, moisture sensors that check soil moisture levels, and efficient drip systems that save water.",
+      "services_p_18": "We offer a variety of solutions - from simple irrigation systems with basic timers, through sophisticated drip systems with multiple separate irrigation zones, to smart systems that can be controlled remotely via smartphone app. Each system is tailored to your specific balcony needs and the types of plants you've chosen.",
+      "services_p_19": "Installing an automatic irrigation system not only saves you valuable time, but also ensures that plants receive the exact amount of water they need, leading to healthier plants and water conservation.",
+      "services_p_20": "A balcony garden requires regular maintenance to stay beautiful and healthy. We offer professional maintenance services tailored to your needs - from monthly visits to full weekly service. Our experienced team takes care of all the details: plant pruning and cleaning, regular fertilizing, irrigation system checks, pest and disease treatment, and plant replacement as needed.",
+      "services_p_21": "We understand that every balcony is unique and requires customized care. Therefore, we create a personal maintenance plan based on your plant types, season, and desired maintenance level. Our team arrives at regular times, equipped with all necessary tools and materials, and performs the work efficiently and professionally.",
+      "services_p_22": "In addition to ongoing maintenance, we also offer emergency services for urgent problems such as pest outbreaks or plant damage due to severe weather conditions.",
+      "services_p_23": "We believe in responsible and sustainable gardening. Our services include comprehensive consulting on ecological gardening methods, use of local and resilient plants, water conservation, and use of organic fertilizers and environmentally friendly pest control materials. We teach our clients how to maintain their balcony garden sustainably and contribute to improving air quality and the urban environment.",
+      "services_p_24": "We also offer innovative solutions such as green walls, balcony composting systems, and organic edible plant cultivation. Our goal is to create balconies that are not only beautiful, but also contribute to the environment and urban quality of life.",
+      "services_p_25": "For clients seeking a luxury living experience, we offer advanced design services for private rooftops and balconies. Our projects include comprehensive landscape planning, installation of synthetic or natural grass, designed lighting systems, luxurious seating areas, and even water features like small fountains or ornamental pools.",
+      "services_p_26": "We work with leading designers and use the highest quality materials to create unique and impressive spaces. Each project is carefully planned taking into account structural limitations, building regulations, and safety requirements. The result is a balcony or rooftop that serves as a true extension of the living space and adds significant value to the property.",
+      "services_p_27": "Contact us today for professional consultation and a personalized quote. We'd be happy to help you realize your green balcony vision!",
+      "services_p_28": "© 2025 Urban Balcony. All rights reserved.",
+      "services_p_29": "Created with&nbsp;Zappy",
+      "terms_link_27": "Ketem200@gmail.com",
+      "terms_link_28": "Privacy Policy",
+      "terms_link_29": "Accessibility",
+      "terms_link_30": "Terms of Use",
+      "terms_link_31": "Zappy",
+      "contact_alt_39": "Urban Balcony",
+      "contact_alt_40": "Modern urban balcony with green plants and seating area",
+      "contact_alt_41": "Rooftop garden with diverse plants",
+      "contact_alt_42": "Small balcony transformed into urban jungle",
+      "contact_alt_43": "Automatic irrigation system on balcony",
+      "contact_alt_44": "Herb garden on urban balcony",
+      "contact_alt_45": "Luxury penthouse balcony with landscape design",
+      "contact_alt_46": "Vertical garden on balcony wall",
+      "contact_alt_47": "Succulent arrangement on urban balcony",
+      "contact_alt_48": "Family-friendly balcony with play area",
+      "contact_alt_49": "Mediterranean style balcony",
+      "contact_alt_50": "Minimalist zen balcony design",
+      "contact_alt_51": "Balcony upgrade with colorful flowers",
+      "contact_nav_35": "Services",
+      "contact_nav_36": "About",
+      "contact_nav_37": "Gallery",
+      "contact_nav_38": "Contact",
+      "gallery_alt_76": "Urban Balcony",
+      "gallery_alt_77": "Luxury rooftop garden in Tel Aviv",
+      "gallery_alt_78": "Small balcony in Ramat Gan",
+      "gallery_alt_79": "Modern balcony in Herzliya",
+      "gallery_alt_80": "Penthouse garden in Netanya",
+      "gallery_alt_81": "Shaded balcony in Givatayim",
+      "gallery_alt_82": "Sun-drenched rooftop in Rishon LeZion",
+      "gallery_alt_83": "Vertical garden in Holon",
+      "gallery_alt_84": "Family balcony in Petah Tikva",
+      "gallery_alt_85": "Minimalist design in Kfar Saba",
+      "gallery_alt_86": "Image",
+      "gallery_nav_72": "Services",
+      "gallery_nav_73": "About",
+      "gallery_nav_74": "Gallery",
+      "gallery_nav_75": "Contact",
+      "privacy_alt_51": "Urban Balcony",
+      "privacy_nav_47": "Services",
+      "privacy_nav_48": "About",
+      "privacy_nav_49": "Gallery",
+      "privacy_nav_50": "Contact",
+      "contact_link_30": "Zappy",
+      "contact_link_31": "Privacy Policy",
+      "contact_link_32": "Accessibility",
+      "contact_link_33": "Terms of Use",
+      "contact_link_34": "Zappy",
+      "gallery_link_68": "Privacy Policy",
+      "gallery_link_69": "Accessibility",
+      "gallery_link_70": "Terms of Use",
+      "gallery_link_71": "Zappy",
+      "gallery_span_41": "Rooftop",
+      "gallery_span_42": "120 sqm",
+      "gallery_span_43": "Automatic irrigation",
+      "gallery_span_44": "Balcony",
+      "gallery_span_45": "8 sqm",
+      "gallery_span_46": "Herb plants",
+      "gallery_span_47": "Balcony",
+      "gallery_span_48": "35 sqm",
+      "gallery_span_49": "Modern design",
+      "gallery_span_50": "Penthouse",
+      "gallery_span_51": "200 sqm",
+      "gallery_span_52": "Fruit trees",
+      "gallery_span_53": "Balcony",
+      "gallery_span_54": "15 sqm",
+      "gallery_span_55": "Vertical garden",
+      "gallery_span_56": "Rooftop",
+      "gallery_span_57": "80 sqm",
+      "gallery_span_58": "Pergola",
+      "gallery_span_59": "Balcony",
+      "gallery_span_60": "6 sqm",
+      "gallery_span_61": "Vertical Garden",
+      "gallery_span_62": "Balcony",
+      "gallery_span_63": "45 sqm",
+      "gallery_span_64": "Child-Friendly",
+      "gallery_span_65": "Balcony",
+      "gallery_span_66": "20 sqm",
+      "gallery_span_67": "Minimalism",
+      "home_page_title": "Transform Your Balcony into an Urban Garden — Urban Balcony",
+      "privacy_link_22": "Ketem200@gmail.com",
+      "privacy_link_23": "Privacy Policy",
+      "privacy_link_24": "Accessibility",
+      "privacy_link_25": "Terms of Use",
+      "privacy_link_26": "Zappy",
+      "services_alt_40": "Urban Balcony",
+      "services_alt_41": "Detailed planning of urban balcony design",
+      "services_alt_42": "Variety of plants suitable for urban gardening",
+      "services_alt_43": "Smart automatic irrigation system for balcony",
+      "services_alt_44": "Professional maintenance of urban balcony garden",
+      "services_alt_45": "Ecological balcony with sustainable gardening solutions",
+      "services_alt_46": "Luxury rooftop garden with sophisticated landscape design",
+      "services_nav_36": "Services",
+      "services_nav_37": "About",
+      "services_nav_38": "Gallery",
+      "services_nav_39": "Contact",
+      "about_page_title": "Our Story — Urban Balcony",
+      "services_link_30": "Zappy",
+      "services_link_31": "Get a Quote",
+      "services_link_32": "Privacy Policy",
+      "services_link_33": "Accessibility",
+      "services_link_34": "Terms of Use",
+      "services_link_35": "Zappy",
+      "terms_page_title": "Terms of Use",
+      "accessibility_p_9": "Urban Balcony is committed to making our services accessible to all. We work to
 
     <script id="zappy-mobile-submenu-script">
     (function() {
@@ -1812,4 +1867,5 @@
     })();
     </script>
     <script src="/script.js"></script>
-</body></html>
+</body>
+</html>
