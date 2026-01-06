@@ -1,50 +1,62 @@
-# Business — Generative Engine Optimization Map
+# Urban Balcony — Generative Engine Optimization Map
+
+> A גינון עירוני ועיצוב נוף business.
 
 ---
 
 ## Pages
 
 ### בית
-https://urban-balcony.zappy5.app
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com
 גלו את השירות המקצועי של Urban Balcony לעיצוב מרפסות עירוניות. התייעצות חינם עכשיו!
 
 ### שירותים
-https://urban-balcony.zappy5.app/services
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/services
 שירותי urban jungle balcony מקצועיים המותאמים לצרכים שלכם. תכנון, עיצוב, ותחזוקה של מרפסות עירוניות.
 
 ### אודות
-https://urban-balcony.zappy5.app/about
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/about
 הכירו את הצוות המקצועי של Urban Balcony - מומחים בגינון עירוני ועיצוב נוף למרפסות וגגות.
 
 ### צור קשר
-https://urban-balcony.zappy5.app/contact
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/contact
 צרו קשר עם Urban Balcony לקבלת ייעוץ חינם והצעת מחיר. נשמח לעזור לכם ליצור את המרפסת הירוקה שלכם!
 
 ### גלריית פרויקטים - Urban Balcony
-https://urban-balcony.zappy5.app/gallery
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/gallery
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://urban-balcony.zappy5.app/privacy
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://urban-balcony.zappy5.app/terms
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://urban-balcony.zappy5.app/accessibility
+https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
 
 # Business Context (for LLM understanding)
 
-## About Business
+## About Urban Balcony
+Urban Balcony is a business in the גינון עירוני ועיצוב נוף industry.
+
+## Target Audience
+- בעלי דירות עירוניות
+- משפחות צעירות אקולוגיות
+- תושבי דירות יוקרה
+
+## Industry
+גינון עירוני ועיצוב נוף
+
 ---
 
 # Additional Resources
 
-- **Sitemap**: https://urban-balcony.zappy5.app/sitemap.xml
-- **Robots.txt**: https://urban-balcony.zappy5.app/robots.txt
+- **Sitemap**: https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/sitemap.xml
+- **Robots.txt**: https://zappy-site-4f0a47c6-b456-4323-9eed.onrender.com/robots.txt
